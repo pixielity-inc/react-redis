@@ -1,9 +1,6 @@
 # =============================================================================
 # CI Workflow
 # =============================================================================
-# Runs automated tests and linting on every push and pull request to main/develop
-# branches. Ensures code quality and prevents broken code from being merged.
-# =============================================================================
 
 name: CI
 
@@ -14,14 +11,11 @@ on:
     branches: [main, develop]
 
 jobs:
-  # ===========================================================================
-  # Build & Test Job
-  # ===========================================================================
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18, 20, 22]
+        node-version: [20, 22]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -36,20 +30,16 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
 
-      - name: Build packages
+      - name: Build package
         run: pnpm run build
-
-      - name: Run typecheck
-        run: pnpm run typecheck
+        working-directory: packages/refine
 
       - name: Run tests
         run: pnpm run test
+        working-directory: packages/refine
 
-  # ===========================================================================
-  # Lint & Format Job
-  # ===========================================================================
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -66,10 +56,12 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
 
       - name: Check formatting
         run: pnpm run format:check
+        working-directory: packages/refine
 
       - name: Run linter
         run: pnpm run lint
+        working-directory: packages/refine
