@@ -1,6 +1,6 @@
 {
   "name": "@abdokouta/react-redis",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Client-side Redis connection management using Upstash HTTP API for React",
   "license": "MIT",
   "author": {
