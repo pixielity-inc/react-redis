@@ -112,27 +112,21 @@ export type {
   SetOptions,
 } from './interfaces/redis-connection.interface';
 
-export type {
-  RedisConfig,
-  RedisConnectionConfig,
-} from './interfaces/redis-config.interface';
+export type { RedisConfig, RedisConnectionConfig } from './interfaces/redis-config.interface';
 
-export type {
-  RedisConnector,
-} from './interfaces/redis-connector.interface';
+export type { RedisConnector } from './interfaces/redis-connector.interface';
 
 // ============================================================================
 // Constants/Tokens
 // ============================================================================
-export {
-  REDIS_CONFIG,
-  REDIS_CONNECTOR,
-} from './constants/tokens.constant';
+export { REDIS_CONFIG, REDIS_CONNECTOR } from './constants/tokens.constant';
 
 // ============================================================================
 // React Hooks
 // ============================================================================
-export {
-  useRedis,
-  useRedisConnection,
-} from './hooks/use-redis';
+export { useRedis, useRedisConnection } from './hooks/use-redis';
+
+// ============================================================================
+// Utils
+// ============================================================================
+export { defineConfig } from './utils';
