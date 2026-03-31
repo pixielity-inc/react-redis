@@ -1,6 +1,6 @@
 {
   "name": "@abdokouta/refine",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Refine Framework integration with dependency injection for React applications",
   "license": "MIT",
   "author": {
