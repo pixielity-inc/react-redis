@@ -1,39 +1,19 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "@abdokouta/react-di",
-  description:
-    "Dependency injection container for React with NestJS-style modules",
+  name: "Refine + DI Example",
+  description: "Example app using @abdokouta/refine with dependency injection",
   navItems: [
     {
       label: "Home",
       href: "/",
     },
     {
-      label: "Basic Demo",
-      href: "/container",
-    },
-    {
-      label: "Advanced Patterns",
-      href: "/advanced",
-    },
-  ],
-  navMenuItems: [
-    {
-      label: "Home",
-      href: "/",
-    },
-    {
-      label: "Basic Demo",
-      href: "/container",
-    },
-    {
-      label: "Advanced Patterns",
-      href: "/advanced",
+      label: "Posts",
+      href: "/posts",
     },
   ],
   links: {
-    github: "https://github.com/abdokouta/react-di",
-    docs: "https://github.com/abdokouta/react-di#readme",
+    github: "https://github.com/pixielity-inc/refine",
   },
 };

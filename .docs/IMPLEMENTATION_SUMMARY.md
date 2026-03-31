@@ -170,7 +170,7 @@ export const testConfig = defineConfig(silentPreset);
 ## Dependencies
 
 ### Peer Dependencies
-- `@abdokouta/container` - For dependency injection
+- `@abdokouta/react-di` - For dependency injection
 - `react` (optional) - For React hooks
 
 ### Dev Dependencies
@@ -282,7 +282,7 @@ The @abdokouta/logger package is a complete, production-ready logging system tha
 - ✅ Has comprehensive documentation with examples
 - ✅ Includes TypeScript types throughout
 - ✅ Works in all modern browsers
-- ✅ Integrates with @abdokouta/container DI system
+- ✅ Integrates with @abdokouta/react-di DI system
 - ✅ All dependencies installed and working
 - ✅ Type checks passing
 - ✅ Build successful

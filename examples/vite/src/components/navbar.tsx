@@ -1,19 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Kbd, Link, TextField, InputGroup } from "@heroui/react";
+import { Link } from "react-router-dom";
+import { Button, Kbd, TextField, InputGroup } from "@heroui/react";
 import clsx from "clsx";
 
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
-import {
-  TwitterIcon,
-  GithubIcon,
-  DiscordIcon,
-  HeartFilledIcon,
-  SearchIcon,
-  Logo,
-} from "@/components/icons";
+import { GithubIcon, SearchIcon, Logo } from "@/components/icons";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,75 +33,48 @@ export const Navbar = () => {
     <nav className="sticky top-0 z-40 w-full border-b border-separator bg-background/70 backdrop-blur-lg">
       <header className="mx-auto flex h-16 max-w-[1280px] items-center justify-between gap-4 px-6">
         <div className="flex items-center gap-4">
-          <a className="flex items-center gap-1" href="/">
+          <Link className="flex items-center gap-1" to="/">
             <Logo />
-            <p className="font-bold text-inherit">ACME</p>
-          </a>
+            <p className="font-bold text-inherit">Refine + DI</p>
+          </Link>
           <ul className="hidden lg:flex gap-4 ml-2">
             {siteConfig.navItems.map((item) => (
               <li key={item.href}>
-                <a
+                <Link
                   className={clsx(
                     "text-foreground hover:text-accent transition-colors",
-                    "data-[active=true]:text-accent data-[active=true]:font-medium",
                   )}
-                  href={item.href}
+                  to={item.href}
                 >
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
         </div>
 
         <div className="hidden sm:flex items-center gap-2">
-          <Link
-            aria-label="Twitter"
-            href={siteConfig.links.twitter}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <TwitterIcon className="text-muted" />
-          </Link>
-          <Link
-            aria-label="Discord"
-            href={siteConfig.links.discord}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <DiscordIcon className="text-muted" />
-          </Link>
-          <Link
+          <a
             aria-label="Github"
             href={siteConfig.links.github}
             rel="noopener noreferrer"
             target="_blank"
           >
             <GithubIcon className="text-muted" />
-          </Link>
+          </a>
           <ThemeSwitch />
           <div className="hidden lg:flex">{searchInput}</div>
-          <div className="hidden md:flex">
-            <Button
-              className="text-sm font-normal"
-              variant="tertiary"
-              onPress={() => window.open(siteConfig.links.sponsor, "_blank")}
-            >
-              <HeartFilledIcon className="text-danger" />
-              Sponsor
-            </Button>
-          </div>
         </div>
 
         <div className="flex sm:hidden items-center gap-2">
-          <Link
+          <a
             aria-label="Github"
             href={siteConfig.links.github}
             rel="noopener noreferrer"
             target="_blank"
           >
             <GithubIcon className="text-muted" />
-          </Link>
+          </a>
           <ThemeSwitch />
           <button
             aria-expanded={isMenuOpen}
@@ -145,18 +112,11 @@ export const Navbar = () => {
         <div className="border-t border-separator sm:hidden">
           <div className="p-4">{searchInput}</div>
           <ul className="flex flex-col gap-2 px-4 pb-4">
-            {siteConfig.navMenuItems.map((item, index) => (
-              <li key={`${item.label}-${index}`}>
+            {siteConfig.navItems.map((item) => (
+              <li key={item.href}>
                 <Link
-                  className={clsx(
-                    "block py-2 text-lg no-underline",
-                    index === 2
-                      ? "text-accent"
-                      : index === siteConfig.navMenuItems.length - 1
-                        ? "text-danger"
-                        : "text-foreground",
-                  )}
-                  href="#"
+                  className="block py-2 text-lg text-foreground no-underline"
+                  to={item.href}
                 >
                   {item.label}
                 </Link>
