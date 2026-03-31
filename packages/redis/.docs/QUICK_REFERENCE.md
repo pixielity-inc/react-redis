@@ -19,7 +19,7 @@ RedisModule.forRoot({
       token: process.env.UPSTASH_REDIS_REST_TOKEN!,
     },
   },
-})
+});
 ```
 
 ## Service Usage
@@ -33,13 +33,13 @@ export class MyService {
 
   async example() {
     const conn = await this.redis.connection();
-    
+
     // Set with expiration
     await conn.set('key', 'value', { ex: 3600 });
-    
+
     // Get
     const value = await conn.get('key');
-    
+
     // Delete
     await conn.del('key');
   }
@@ -53,7 +53,7 @@ import { useRedis } from '@abdokouta/redis';
 
 function MyComponent() {
   const redis = useRedis();
-  
+
   useEffect(() => {
     async function load() {
       const conn = await redis.connection();
@@ -67,6 +67,7 @@ function MyComponent() {
 ## Common Operations
 
 ### Basic Operations
+
 ```typescript
 // Get/Set
 await conn.get('key');
@@ -84,6 +85,7 @@ const ttl = await conn.ttl('key');
 ```
 
 ### Multi-Key Operations
+
 ```typescript
 // Get multiple
 const [v1, v2] = await conn.mget('key1', 'key2');
@@ -93,6 +95,7 @@ await conn.mset({ key1: 'val1', key2: 'val2' });
 ```
 
 ### Counters
+
 ```typescript
 // Increment
 await conn.incr('counter');
@@ -104,8 +107,10 @@ await conn.decrby('counter', 3);
 ```
 
 ### Pipeline (Batching)
+
 ```typescript
-const results = await conn.pipeline()
+const results = await conn
+  .pipeline()
   .set('key1', 'value1')
   .set('key2', 'value2')
   .get('key1')
@@ -115,6 +120,7 @@ const results = await conn.pipeline()
 ## Common Patterns
 
 ### Cache-Aside
+
 ```typescript
 const cached = await conn.get(key);
 if (cached) return JSON.parse(cached);
@@ -125,8 +131,12 @@ return data;
 ```
 
 ### Distributed Lock
+
 ```typescript
-const acquired = await conn.set('lock:resource', 'locked', { nx: true, ex: 10 });
+const acquired = await conn.set('lock:resource', 'locked', {
+  nx: true,
+  ex: 10,
+});
 if (acquired === 'OK') {
   // Do work
   await conn.del('lock:resource');
@@ -134,6 +144,7 @@ if (acquired === 'OK') {
 ```
 
 ### Rate Limiting
+
 ```typescript
 const count = await conn.incr(`ratelimit:${userId}`);
 if (count === 1) {
@@ -146,9 +157,9 @@ return count <= 100;
 
 ```typescript
 interface RedisConnectionConfig {
-  url: string;                    // Required
-  token: string;                  // Required
-  timeout?: number;               // Default: 5000ms
+  url: string; // Required
+  token: string; // Required
+  timeout?: number; // Default: 5000ms
   retry?: {
     retries?: number;
     backoff?: (retryCount: number) => number;
@@ -167,7 +178,7 @@ RedisModule.forRoot({
     cache: { url: '...', token: '...' },
     session: { url: '...', token: '...' },
   },
-})
+});
 
 // Use
 const cache = await redis.connection('cache');
@@ -197,6 +208,7 @@ try {
 ## API Reference
 
 ### RedisService
+
 - `connection(name?: string): Promise<RedisConnection>`
 - `disconnect(name?: string): Promise<void>`
 - `disconnectAll(): Promise<void>`
@@ -205,6 +217,7 @@ try {
 - `isConnectionActive(name?: string): boolean`
 
 ### RedisConnection
+
 - `get(key: string): Promise<string | null>`
 - `set(key: string, value: string, options?: SetOptions): Promise<'OK' | null>`
 - `del(...keys: string[]): Promise<number>`
@@ -227,6 +240,7 @@ try {
 - `disconnect(): Promise<void>`
 
 ### React Hooks
+
 - `useRedis(): RedisService`
 - `useRedisConnection(name?: string): Promise<RedisConnection>`
 

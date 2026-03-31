@@ -1,25 +1,25 @@
 /**
  * Redis connection interface
- * 
+ *
  * Provides a unified abstraction over the Upstash Redis HTTP client,
  * enabling browser-compatible Redis operations without requiring Node.js
  * or persistent TCP connections.
- * 
+ *
  * @remarks
  * This interface is designed for client-side use with Upstash Redis REST API.
  * All operations are HTTP-based and work seamlessly in browser environments.
- * 
+ *
  * @example
  * ```typescript
  * const connection = await redisManager.connection('cache');
- * 
+ *
  * // Basic operations
  * await connection.set('user:123', JSON.stringify(user), { ex: 3600 });
  * const data = await connection.get('user:123');
- * 
+ *
  * // Multi-key operations
  * const users = await connection.mget('user:1', 'user:2', 'user:3');
- * 
+ *
  * // Increment counters
  * await connection.incr('page:views');
  * ```
@@ -27,9 +27,9 @@
 export interface RedisConnection {
   /**
    * Get the connection name
-   * 
+   *
    * @returns The unique identifier for this connection
-   * 
+   *
    * @example
    * ```typescript
    * const name = connection.getName(); // 'cache'
@@ -39,13 +39,13 @@ export interface RedisConnection {
 
   /**
    * Get the underlying Upstash Redis client
-   * 
+   *
    * @returns The raw Upstash Redis instance for advanced operations
-   * 
+   *
    * @remarks
    * Use this when you need direct access to Upstash-specific features
    * not exposed through this interface.
-   * 
+   *
    * @example
    * ```typescript
    * const upstashClient = connection.client();
@@ -60,10 +60,10 @@ export interface RedisConnection {
 
   /**
    * Get the value of a key
-   * 
+   *
    * @param key - The key to retrieve
    * @returns The value stored at the key, or null if the key doesn't exist
-   * 
+   *
    * @example
    * ```typescript
    * const value = await connection.get('user:123');
@@ -76,20 +76,20 @@ export interface RedisConnection {
 
   /**
    * Set the value of a key with optional expiration
-   * 
+   *
    * @param key - The key to set
    * @param value - The value to store (must be a string)
    * @param options - Optional settings for expiration and conditional setting
    * @returns 'OK' if successful, null if the operation failed (e.g., NX condition not met)
-   * 
+   *
    * @example
    * ```typescript
    * // Set with 1 hour expiration
    * await connection.set('session:abc', sessionData, { ex: 3600 });
-   * 
+   *
    * // Set only if key doesn't exist
    * const created = await connection.set('lock:resource', 'locked', { nx: true });
-   * 
+   *
    * // Set with millisecond precision
    * await connection.set('temp:data', value, { px: 5000 });
    * ```
@@ -98,10 +98,10 @@ export interface RedisConnection {
 
   /**
    * Delete one or more keys
-   * 
+   *
    * @param keys - The keys to delete
    * @returns The number of keys that were deleted
-   * 
+   *
    * @example
    * ```typescript
    * const deleted = await connection.del('user:123', 'user:456');
@@ -112,10 +112,10 @@ export interface RedisConnection {
 
   /**
    * Check if one or more keys exist
-   * 
+   *
    * @param keys - The keys to check
    * @returns The number of keys that exist
-   * 
+   *
    * @example
    * ```typescript
    * const count = await connection.exists('user:123', 'user:456');
@@ -128,11 +128,11 @@ export interface RedisConnection {
 
   /**
    * Set a key's time to live in seconds
-   * 
+   *
    * @param key - The key to set expiration on
    * @param seconds - The number of seconds until expiration
    * @returns 1 if the timeout was set, 0 if the key doesn't exist
-   * 
+   *
    * @example
    * ```typescript
    * await connection.set('temp:data', value);
@@ -143,10 +143,10 @@ export interface RedisConnection {
 
   /**
    * Get the time to live for a key in seconds
-   * 
+   *
    * @param key - The key to check
    * @returns The remaining time to live in seconds, -1 if no expiration, -2 if key doesn't exist
-   * 
+   *
    * @example
    * ```typescript
    * const ttl = await connection.ttl('session:abc');
@@ -163,13 +163,13 @@ export interface RedisConnection {
 
   /**
    * Get the values of multiple keys
-   * 
+   *
    * @param keys - The keys to retrieve
    * @returns An array of values in the same order as the keys (null for non-existent keys)
-   * 
+   *
    * @remarks
    * This is more efficient than multiple GET calls as it uses a single HTTP request.
-   * 
+   *
    * @example
    * ```typescript
    * const [user1, user2, user3] = await connection.mget(
@@ -183,14 +183,14 @@ export interface RedisConnection {
 
   /**
    * Set multiple keys to multiple values
-   * 
+   *
    * @param data - An object mapping keys to values
    * @returns 'OK' if successful
-   * 
+   *
    * @remarks
    * This is an atomic operation - either all keys are set or none are.
    * More efficient than multiple SET calls.
-   * 
+   *
    * @example
    * ```typescript
    * await connection.mset({
@@ -208,14 +208,14 @@ export interface RedisConnection {
 
   /**
    * Increment the integer value of a key by 1
-   * 
+   *
    * @param key - The key to increment
    * @returns The value after incrementing
-   * 
+   *
    * @remarks
    * If the key doesn't exist, it's set to 0 before incrementing.
    * If the value is not an integer, an error is thrown.
-   * 
+   *
    * @example
    * ```typescript
    * const views = await connection.incr('page:views');
@@ -226,11 +226,11 @@ export interface RedisConnection {
 
   /**
    * Increment the integer value of a key by a specific amount
-   * 
+   *
    * @param key - The key to increment
    * @param increment - The amount to increment by
    * @returns The value after incrementing
-   * 
+   *
    * @example
    * ```typescript
    * await connection.incrby('user:123:points', 50);
@@ -240,10 +240,10 @@ export interface RedisConnection {
 
   /**
    * Decrement the integer value of a key by 1
-   * 
+   *
    * @param key - The key to decrement
    * @returns The value after decrementing
-   * 
+   *
    * @example
    * ```typescript
    * const remaining = await connection.decr('rate:limit:123');
@@ -253,11 +253,11 @@ export interface RedisConnection {
 
   /**
    * Decrement the integer value of a key by a specific amount
-   * 
+   *
    * @param key - The key to decrement
    * @param decrement - The amount to decrement by
    * @returns The value after decrementing
-   * 
+   *
    * @example
    * ```typescript
    * await connection.decrby('inventory:item:123', 5);
@@ -271,16 +271,16 @@ export interface RedisConnection {
 
   /**
    * Add a member to a sorted set with a score
-   * 
+   *
    * @param key - The sorted set key
    * @param score - The score for the member (typically a timestamp)
    * @param member - The member to add
    * @returns The number of elements added (0 if member already existed and score was updated)
-   * 
+   *
    * @remarks
    * Used internally for cache tag TTL tracking. The score is typically
    * a Unix timestamp representing when a cached item expires.
-   * 
+   *
    * @example
    * ```typescript
    * // Track when a cached item expires
@@ -292,12 +292,12 @@ export interface RedisConnection {
 
   /**
    * Get a range of members from a sorted set by index
-   * 
+   *
    * @param key - The sorted set key
    * @param start - The starting index (0-based)
    * @param stop - The ending index (-1 for last element)
    * @returns An array of members in the specified range
-   * 
+   *
    * @example
    * ```typescript
    * // Get all members
@@ -308,11 +308,11 @@ export interface RedisConnection {
 
   /**
    * Remove one or more members from a sorted set
-   * 
+   *
    * @param key - The sorted set key
    * @param members - The members to remove
    * @returns The number of members removed
-   * 
+   *
    * @example
    * ```typescript
    * await connection.zrem('tag:users:ttl', 'user:123', 'user:456');
@@ -322,16 +322,16 @@ export interface RedisConnection {
 
   /**
    * Remove all members in a sorted set with scores between min and max
-   * 
+   *
    * @param key - The sorted set key
    * @param min - The minimum score (inclusive)
    * @param max - The maximum score (inclusive)
    * @returns The number of members removed
-   * 
+   *
    * @remarks
    * Used for cleaning up expired cache entries. Pass the current timestamp
    * as max to remove all entries that have expired.
-   * 
+   *
    * @example
    * ```typescript
    * // Remove all expired entries
@@ -348,17 +348,17 @@ export interface RedisConnection {
 
   /**
    * Execute a Lua script on the Redis server
-   * 
+   *
    * @param script - The Lua script to execute
    * @param keys - Array of keys that the script will access
    * @param args - Array of additional arguments to pass to the script
    * @returns The result of the script execution
-   * 
+   *
    * @remarks
    * Lua scripts execute atomically on the Redis server, making them ideal
    * for complex operations that need to be atomic. Used internally for
    * cache tag operations.
-   * 
+   *
    * @example
    * ```typescript
    * const script = `
@@ -380,14 +380,14 @@ export interface RedisConnection {
 
   /**
    * Create a pipeline for batching multiple commands
-   * 
+   *
    * @returns A pipeline instance for chaining commands
-   * 
+   *
    * @remarks
    * Pipelines batch multiple commands into a single HTTP request,
    * significantly improving performance when executing multiple operations.
    * All commands are executed atomically on the server.
-   * 
+   *
    * @example
    * ```typescript
    * const results = await connection.pipeline()
@@ -396,7 +396,7 @@ export interface RedisConnection {
    *   .get('key1')
    *   .del('key3')
    *   .exec();
-   * 
+   *
    * console.log(results); // ['OK', 'OK', 'value1', 1]
    * ```
    */
@@ -408,13 +408,13 @@ export interface RedisConnection {
 
   /**
    * Delete all keys in the current database
-   * 
+   *
    * @returns 'OK' if successful
-   * 
+   *
    * @remarks
    * ⚠️ WARNING: This is a destructive operation that cannot be undone.
    * Use with extreme caution, typically only in development/testing.
-   * 
+   *
    * @example
    * ```typescript
    * if (process.env.NODE_ENV === 'test') {
@@ -426,11 +426,11 @@ export interface RedisConnection {
 
   /**
    * Disconnect from Redis
-   * 
+   *
    * @remarks
    * For Upstash HTTP client, this is a no-op since there are no persistent
    * connections. Included for interface compatibility.
-   * 
+   *
    * @example
    * ```typescript
    * await connection.disconnect();
@@ -441,11 +441,11 @@ export interface RedisConnection {
 
 /**
  * Pipeline interface for batching Redis commands
- * 
+ *
  * @remarks
  * Pipelines improve performance by sending multiple commands in a single
  * HTTP request. Commands are queued and executed atomically when exec() is called.
- * 
+ *
  * @example
  * ```typescript
  * const pipeline = connection.pipeline();
@@ -454,14 +454,14 @@ export interface RedisConnection {
  *   .set('user:2', userData2)
  *   .expire('user:1', 3600)
  *   .expire('user:2', 3600);
- * 
+ *
  * const results = await pipeline.exec();
  * ```
  */
 export interface RedisPipeline {
   /**
    * Queue a GET command
-   * 
+   *
    * @param key - The key to retrieve
    * @returns The pipeline instance for chaining
    */
@@ -469,7 +469,7 @@ export interface RedisPipeline {
 
   /**
    * Queue a SET command
-   * 
+   *
    * @param key - The key to set
    * @param value - The value to store
    * @param options - Optional expiration settings
@@ -479,7 +479,7 @@ export interface RedisPipeline {
 
   /**
    * Queue a DEL command
-   * 
+   *
    * @param keys - The keys to delete
    * @returns The pipeline instance for chaining
    */
@@ -487,9 +487,9 @@ export interface RedisPipeline {
 
   /**
    * Execute all queued commands
-   * 
+   *
    * @returns An array of results, one for each queued command
-   * 
+   *
    * @remarks
    * The results array corresponds to the order of queued commands.
    * If a command fails, its result will be an error object.
@@ -499,22 +499,22 @@ export interface RedisPipeline {
 
 /**
  * Options for SET command
- * 
+ *
  * @remarks
  * These options control expiration and conditional setting behavior.
  * Only one expiration option (ex or px) should be used at a time.
- * 
+ *
  * @example
  * ```typescript
  * // Expire in 1 hour
  * const opts1: SetOptions = { ex: 3600 };
- * 
+ *
  * // Expire in 5 seconds (millisecond precision)
  * const opts2: SetOptions = { px: 5000 };
- * 
+ *
  * // Set only if key doesn't exist
  * const opts3: SetOptions = { nx: true };
- * 
+ *
  * // Set only if key exists
  * const opts4: SetOptions = { xx: true };
  * ```
@@ -522,7 +522,7 @@ export interface RedisPipeline {
 export interface SetOptions {
   /**
    * Set the expiration time in seconds
-   * 
+   *
    * @remarks
    * Cannot be used together with px option.
    */
@@ -530,7 +530,7 @@ export interface SetOptions {
 
   /**
    * Set the expiration time in milliseconds
-   * 
+   *
    * @remarks
    * Cannot be used together with ex option.
    * Provides millisecond precision for short-lived cache entries.
@@ -539,7 +539,7 @@ export interface SetOptions {
 
   /**
    * Only set the key if it does not already exist
-   * 
+   *
    * @remarks
    * Useful for implementing distributed locks or ensuring
    * a value is only set once.
@@ -548,7 +548,7 @@ export interface SetOptions {
 
   /**
    * Only set the key if it already exists
-   * 
+   *
    * @remarks
    * Useful for updating existing values without creating new ones.
    */

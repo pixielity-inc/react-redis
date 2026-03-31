@@ -1,21 +1,21 @@
 /**
  * Redis configuration interfaces for Upstash HTTP client
- * 
+ *
  * @remarks
  * These interfaces define the configuration structure for connecting to
  * Upstash Redis via HTTP REST API. This is browser-compatible and doesn't
  * require Node.js or persistent TCP connections.
- * 
+ *
  * @packageDocumentation
  */
 
 /**
  * Configuration for a single Upstash Redis connection
- * 
+ *
  * @remarks
  * Upstash Redis uses HTTP REST API, making it perfect for browser environments.
  * Get your credentials from the Upstash console: https://console.upstash.com
- * 
+ *
  * @example
  * ```typescript
  * const config: RedisConnectionConfig = {
@@ -32,13 +32,13 @@
 export interface RedisConnectionConfig {
   /**
    * Upstash Redis REST URL
-   * 
+   *
    * @remarks
    * This is the HTTPS endpoint for your Upstash Redis instance.
    * Format: https://[name]-[id].upstash.io
-   * 
+   *
    * Find this in your Upstash console under "REST API" section.
-   * 
+   *
    * @example
    * ```typescript
    * url: "https://my-cache-12345.upstash.io"
@@ -48,13 +48,13 @@ export interface RedisConnectionConfig {
 
   /**
    * Upstash Redis REST token
-   * 
+   *
    * @remarks
    * This is your authentication token for the Upstash Redis REST API.
    * Keep this secret and never commit it to version control.
-   * 
+   *
    * Find this in your Upstash console under "REST API" section.
-   * 
+   *
    * @example
    * ```typescript
    * token: process.env.UPSTASH_REDIS_REST_TOKEN!
@@ -64,11 +64,11 @@ export interface RedisConnectionConfig {
 
   /**
    * Optional retry configuration
-   * 
+   *
    * @remarks
    * Configure automatic retry behavior for failed requests.
    * Useful for handling transient network errors.
-   * 
+   *
    * @example
    * ```typescript
    * retry: {
@@ -89,7 +89,7 @@ export interface RedisConnectionConfig {
 
     /**
      * Function to calculate backoff delay in milliseconds
-     * 
+     *
      * @param retryCount - The current retry attempt (0-indexed)
      * @returns Delay in milliseconds before next retry
      */
@@ -98,13 +98,13 @@ export interface RedisConnectionConfig {
 
   /**
    * Request timeout in milliseconds
-   * 
+   *
    * @remarks
    * Maximum time to wait for a Redis operation to complete.
    * If the operation takes longer, it will be aborted.
-   * 
+   *
    * @default 5000 (5 seconds)
-   * 
+   *
    * @example
    * ```typescript
    * timeout: 10000 // 10 seconds
@@ -114,14 +114,14 @@ export interface RedisConnectionConfig {
 
   /**
    * Enable automatic pipelining
-   * 
+   *
    * @remarks
    * When enabled, the client automatically batches commands that are
    * issued within a short time window into a single HTTP request.
    * This can significantly improve performance for multiple operations.
-   * 
+   *
    * @default false
-   * 
+   *
    * @example
    * ```typescript
    * enableAutoPipelining: true
@@ -132,12 +132,12 @@ export interface RedisConnectionConfig {
 
 /**
  * Global Redis configuration with multiple named connections
- * 
+ *
  * @remarks
  * Allows you to configure multiple Redis connections for different purposes
  * (e.g., cache, sessions, rate limiting). Similar to Laravel's multi-connection
  * database configuration.
- * 
+ *
  * @example
  * ```typescript
  * const config: RedisConfig = {
@@ -164,11 +164,11 @@ export interface RedisConnectionConfig {
 export interface RedisConfig {
   /**
    * Default connection name
-   * 
+   *
    * @remarks
    * This connection will be used when no specific connection is requested.
    * Must match one of the keys in the connections object.
-   * 
+   *
    * @example
    * ```typescript
    * default: 'cache'
@@ -178,12 +178,12 @@ export interface RedisConfig {
 
   /**
    * Named Redis connections
-   * 
+   *
    * @remarks
    * A map of connection names to their configurations.
    * Each connection can have different settings and point to different
    * Upstash Redis instances.
-   * 
+   *
    * @example
    * ```typescript
    * connections: {

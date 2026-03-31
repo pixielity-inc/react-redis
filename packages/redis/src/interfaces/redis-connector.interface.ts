@@ -1,10 +1,10 @@
 /**
  * Redis connector interface
- * 
+ *
  * @remarks
  * The connector is responsible for creating Redis connections from configuration.
  * This abstraction allows for different connection strategies and makes testing easier.
- * 
+ *
  * @packageDocumentation
  */
 
@@ -13,12 +13,12 @@ import type { RedisConnectionConfig } from './redis-config.interface';
 
 /**
  * Connector creates Redis connections from configuration
- * 
+ *
  * @remarks
  * The connector pattern separates connection creation logic from connection management.
  * This makes it easy to swap connection implementations (e.g., for testing) without
  * changing the rest of the codebase.
- * 
+ *
  * @example
  * ```typescript
  * @Injectable()
@@ -36,12 +36,12 @@ import type { RedisConnectionConfig } from './redis-config.interface';
 export interface RedisConnector {
   /**
    * Create a Redis connection from configuration
-   * 
+   *
    * @param config - The connection configuration
    * @returns A promise that resolves to a Redis connection
-   * 
+   *
    * @throws {Error} If the connection cannot be established
-   * 
+   *
    * @example
    * ```typescript
    * const connector = new UpstashConnector();
@@ -49,7 +49,7 @@ export interface RedisConnector {
    *   url: 'https://my-redis.upstash.io',
    *   token: 'my-token',
    * });
-   * 
+   *
    * await connection.set('key', 'value');
    * ```
    */

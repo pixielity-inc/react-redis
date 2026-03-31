@@ -1,11 +1,11 @@
 /**
  * Upstash Redis connector
- * 
+ *
  * @remarks
  * Creates Upstash Redis connections from configuration.
  * This connector initializes the Upstash HTTP client and wraps it
  * in our connection interface.
- * 
+ *
  * @packageDocumentation
  */
 
@@ -16,19 +16,19 @@ import type { RedisConnector, RedisConnection, RedisConnectionConfig } from '@/i
 
 /**
  * Upstash Redis connector implementation
- * 
+ *
  * @remarks
  * This connector creates browser-compatible Redis connections using
  * the Upstash HTTP REST API. It handles client initialization and
  * configuration.
- * 
+ *
  * The connector is injectable and can be used with dependency injection
  * frameworks like @abdokouta/react-di.
- * 
+ *
  * @example
  * ```typescript
  * const connector = new UpstashConnector();
- * 
+ *
  * const connection = await connector.connect({
  *   url: 'https://my-redis.upstash.io',
  *   token: 'my-token',
@@ -38,7 +38,7 @@ import type { RedisConnector, RedisConnection, RedisConnectionConfig } from '@/i
  *     backoff: (retryCount) => Math.min(1000 * 2 ** retryCount, 3000)
  *   }
  * });
- * 
+ *
  * // Use the connection
  * await connection.set('key', 'value');
  * ```
@@ -47,19 +47,19 @@ import type { RedisConnector, RedisConnection, RedisConnectionConfig } from '@/i
 export class UpstashConnector implements RedisConnector {
   /**
    * Create a Redis connection from configuration
-   * 
+   *
    * @param config - The Upstash Redis configuration
    * @returns A promise that resolves to a Redis connection
-   * 
+   *
    * @throws {Error} If the configuration is invalid or connection fails
-   * 
+   *
    * @remarks
    * This method:
    * 1. Validates the configuration
    * 2. Creates an Upstash Redis HTTP client
    * 3. Wraps it in our connection interface
    * 4. Returns the connection ready for use
-   * 
+   *
    * The connection is lazy - it doesn't actually connect until the first
    * operation is performed (since HTTP is connectionless).
    */

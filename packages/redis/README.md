@@ -1,11 +1,13 @@
 # @abdokouta/redis
 
-Client-side Redis connection management using Upstash HTTP API for Refine applications.
+Client-side Redis connection management using Upstash HTTP API for Refine
+applications.
 
 ## Features
 
 - ✅ **Browser-Compatible**: Uses Upstash HTTP REST API (no Node.js required)
-- ✅ **Multiple Connections**: Support for named connections (cache, session, etc.)
+- ✅ **Multiple Connections**: Support for named connections (cache, session,
+  etc.)
 - ✅ **Dependency Injection**: Integrates with @abdokouta/container
 - ✅ **React Hooks**: Easy-to-use hooks for React components
 - ✅ **TypeScript**: Full type safety with comprehensive JSDoc
@@ -95,7 +97,7 @@ function UserProfile({ userId }: { userId: string }) {
   useEffect(() => {
     async function loadUser() {
       const connection = await redis.connection();
-      
+
       // Try cache first
       const cached = await connection.get(`user:${userId}`);
       if (cached) {
@@ -148,7 +150,7 @@ RedisModule.forRoot({
       enableAutoPipelining: true,
     },
   },
-})
+});
 ```
 
 ### Connection Options
@@ -156,17 +158,17 @@ RedisModule.forRoot({
 ```typescript
 interface RedisConnectionConfig {
   // Required
-  url: string;      // Upstash Redis REST URL
-  token: string;    // Upstash Redis REST token
+  url: string; // Upstash Redis REST URL
+  token: string; // Upstash Redis REST token
 
   // Optional
   timeout?: number; // Request timeout in ms (default: 5000)
-  
+
   retry?: {
     retries?: number;
     backoff?: (retryCount: number) => number;
   };
-  
+
   enableAutoPipelining?: boolean; // Batch commands automatically
 }
 ```
@@ -230,8 +232,8 @@ const [val1, val2] = await connection.mget('key1', 'key2');
 
 // Set multiple keys
 await connection.mset({
-  'key1': 'value1',
-  'key2': 'value2',
+  key1: 'value1',
+  key2: 'value2',
 });
 ```
 
@@ -250,7 +252,8 @@ await connection.decrby('counter', 3);
 #### Pipeline (Batching)
 
 ```typescript
-const results = await connection.pipeline()
+const results = await connection
+  .pipeline()
   .set('key1', 'value1')
   .set('key2', 'value2')
   .get('key1')
@@ -305,23 +308,19 @@ useEffect(() => {
 ```typescript
 async function getUser(id: string): Promise<User> {
   const connection = await redis.connection();
-  
+
   // Try cache
   const cached = await connection.get(`user:${id}`);
   if (cached) {
     return JSON.parse(cached);
   }
-  
+
   // Fetch from database
   const user = await db.users.findById(id);
-  
+
   // Cache for 1 hour
-  await connection.set(
-    `user:${id}`,
-    JSON.stringify(user),
-    { ex: 3600 }
-  );
-  
+  await connection.set(`user:${id}`, JSON.stringify(user), { ex: 3600 });
+
   return user;
 }
 ```
@@ -329,17 +328,19 @@ async function getUser(id: string): Promise<User> {
 ### Distributed Locking
 
 ```typescript
-async function acquireLock(resource: string, ttl: number = 10): Promise<boolean> {
+async function acquireLock(
+  resource: string,
+  ttl: number = 10
+): Promise<boolean> {
   const connection = await redis.connection();
   const lockKey = `lock:${resource}`;
-  
+
   // Try to acquire lock (set if not exists)
-  const acquired = await connection.set(
-    lockKey,
-    'locked',
-    { nx: true, ex: ttl }
-  );
-  
+  const acquired = await connection.set(lockKey, 'locked', {
+    nx: true,
+    ex: ttl,
+  });
+
   return acquired === 'OK';
 }
 
@@ -359,14 +360,14 @@ async function checkRateLimit(
 ): Promise<boolean> {
   const connection = await redis.connection();
   const key = `ratelimit:${userId}`;
-  
+
   const current = await connection.incr(key);
-  
+
   if (current === 1) {
     // First request, set expiration
     await connection.expire(key, window);
   }
-  
+
   return current <= limit;
 }
 ```
@@ -374,7 +375,10 @@ async function checkRateLimit(
 ### Session Storage
 
 ```typescript
-async function saveSession(sessionId: string, data: SessionData): Promise<void> {
+async function saveSession(
+  sessionId: string,
+  data: SessionData
+): Promise<void> {
   const connection = await redis.connection('session');
   await connection.set(
     `session:${sessionId}`,
@@ -410,7 +414,8 @@ Batch operations for better performance:
 
 ```typescript
 // Good
-await connection.pipeline()
+await connection
+  .pipeline()
   .set('key1', 'value1')
   .set('key2', 'value2')
   .set('key3', 'value3')
@@ -440,13 +445,9 @@ Organize keys with prefixes:
 
 ```typescript
 // Good
-`user:${userId}:profile`
-`cache:posts:${postId}`
-`session:${sessionId}`
-
+`user:${userId}:profile``cache:posts:${postId}``session:${sessionId}`
 // Bad
-`${userId}`
-`${postId}`
+`${userId}``${postId}`;
 ```
 
 ### 5. Clean Up on Shutdown
@@ -473,11 +474,13 @@ import type {
 ## Browser Compatibility
 
 This package works in all modern browsers that support:
+
 - Fetch API
 - Promises
 - ES2020 features
 
-No polyfills required for modern browsers (Chrome 80+, Firefox 75+, Safari 13.1+, Edge 80+).
+No polyfills required for modern browsers (Chrome 80+, Firefox 75+, Safari
+13.1+, Edge 80+).
 
 ## License
 
@@ -485,7 +488,8 @@ MIT
 
 ## Contributing
 
-Contributions are welcome! Please read our contributing guidelines before submitting PRs.
+Contributions are welcome! Please read our contributing guidelines before
+submitting PRs.
 
 ## Support
 
@@ -496,4 +500,5 @@ Contributions are welcome! Please read our contributing guidelines before submit
 ## Related Packages
 
 - [@abdokouta/cache](../cache) - Multi-driver cache system
-- [@upstash/redis](https://github.com/upstash/upstash-redis) - Upstash Redis client
+- [@upstash/redis](https://github.com/upstash/upstash-redis) - Upstash Redis
+  client

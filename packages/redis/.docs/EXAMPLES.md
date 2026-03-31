@@ -30,8 +30,8 @@ import { RedisModule } from '@abdokouta/redis';
           timeout: 5000,
           retry: {
             retries: 3,
-            backoff: (retryCount) => Math.min(1000 * 2 ** retryCount, 3000)
-          }
+            backoff: (retryCount) => Math.min(1000 * 2 ** retryCount, 3000),
+          },
         },
       },
     }),
@@ -117,7 +117,7 @@ export class UserService {
     // Fetch from database
     console.log('Cache miss - fetching from database');
     const user = await this.database.users.findById(id);
-    
+
     if (user) {
       // Cache for 1 hour
       await connection.set(cacheKey, JSON.stringify(user), { ex: 3600 });
@@ -128,22 +128,22 @@ export class UserService {
 
   async updateUser(id: string, data: Partial<User>): Promise<User> {
     const connection = await this.redis.connection();
-    
+
     // Update in database
     const user = await this.database.users.update(id, data);
-    
+
     // Invalidate cache
     await connection.del(`user:${id}`);
-    
+
     return user;
   }
 
   async deleteUser(id: string): Promise<void> {
     const connection = await this.redis.connection();
-    
+
     // Delete from database
     await this.database.users.delete(id);
-    
+
     // Invalidate cache
     await connection.del(`user:${id}`);
   }
@@ -168,7 +168,7 @@ function UserProfile({ userId }: { userId: string }) {
       try {
         const connection = await redis.connection();
         const cached = await connection.get(`user:${userId}`);
-        
+
         if (cached) {
           setUser(JSON.parse(cached));
         } else {
@@ -219,7 +219,7 @@ function useCache<T>(key: string, fetcher: () => Promise<T>, ttl: number = 3600)
       try {
         setLoading(true);
         const connection = await redis.connection();
-        
+
         // Try cache
         const cached = await connection.get(key);
         if (cached) {
@@ -287,10 +287,10 @@ export class ProductService {
 
     // Fetch from database
     const product = await this.database.products.findById(id);
-    
+
     // Cache for 1 hour
     await connection.set(cacheKey, JSON.stringify(product), { ex: 3600 });
-    
+
     return product;
   }
 }
@@ -305,17 +305,15 @@ export class ProductService {
 
   async updateProduct(id: string, data: Partial<Product>): Promise<Product> {
     const connection = await this.redis.connection();
-    
+
     // Update database
     const product = await this.database.products.update(id, data);
-    
+
     // Update cache immediately
-    await connection.set(
-      `product:${id}`,
-      JSON.stringify(product),
-      { ex: 3600 }
-    );
-    
+    await connection.set(`product:${id}`, JSON.stringify(product), {
+      ex: 3600,
+    });
+
     return product;
   }
 }
@@ -328,20 +326,16 @@ export class ProductService {
 export class LockService {
   constructor(private readonly redis: RedisService) {}
 
-  async acquireLock(
-    resource: string,
-    ttl: number = 10
-  ): Promise<boolean> {
+  async acquireLock(resource: string, ttl: number = 10): Promise<boolean> {
     const connection = await this.redis.connection();
     const lockKey = `lock:${resource}`;
-    
+
     // Try to acquire lock (set if not exists)
-    const acquired = await connection.set(
-      lockKey,
-      'locked',
-      { nx: true, ex: ttl }
-    );
-    
+    const acquired = await connection.set(lockKey, 'locked', {
+      nx: true,
+      ex: ttl,
+    });
+
     return acquired === 'OK';
   }
 
@@ -356,7 +350,7 @@ export class LockService {
     ttl: number = 10
   ): Promise<T> {
     const acquired = await this.acquireLock(resource, ttl);
-    
+
     if (!acquired) {
       throw new Error(`Failed to acquire lock for ${resource}`);
     }
@@ -392,17 +386,17 @@ export class RateLimitService {
   ): Promise<{ allowed: boolean; remaining: number }> {
     const connection = await this.redis.connection();
     const key = `ratelimit:${userId}`;
-    
+
     const current = await connection.incr(key);
-    
+
     if (current === 1) {
       // First request, set expiration
       await connection.expire(key, window);
     }
-    
+
     const allowed = current <= limit;
     const remaining = Math.max(0, limit - current);
-    
+
     return { allowed, remaining };
   }
 }
@@ -412,7 +406,7 @@ async function rateLimitMiddleware(req, res, next) {
   const { allowed, remaining } = await rateLimitService.checkRateLimit(
     req.user.id,
     100, // 100 requests
-    60   // per minute
+    60 // per minute
   );
 
   res.setHeader('X-RateLimit-Remaining', remaining.toString());
@@ -435,13 +429,13 @@ export class SessionService {
   async createSession(userId: string, data: SessionData): Promise<string> {
     const connection = await this.redis.connection('session');
     const sessionId = generateSessionId();
-    
+
     await connection.set(
       `session:${sessionId}`,
       JSON.stringify({ userId, ...data }),
       { ex: 86400 } // 24 hours
     );
-    
+
     return sessionId;
   }
 
@@ -501,29 +495,25 @@ export class BatchService {
 
   async cacheMultipleUsers(users: User[]): Promise<void> {
     const connection = await this.redis.connection();
-    
+
     // Use pipeline for better performance
     const pipeline = connection.pipeline();
-    
+
     for (const user of users) {
-      pipeline.set(
-        `user:${user.id}`,
-        JSON.stringify(user),
-        { ex: 3600 }
-      );
+      pipeline.set(`user:${user.id}`, JSON.stringify(user), { ex: 3600 });
     }
-    
+
     await pipeline.exec();
   }
 
   async getMultipleUsers(ids: string[]): Promise<(User | null)[]> {
     const connection = await this.redis.connection();
-    
+
     // Use mget for efficient multi-key retrieval
-    const keys = ids.map(id => `user:${id}`);
+    const keys = ids.map((id) => `user:${id}`);
     const values = await connection.mget(...keys);
-    
-    return values.map(v => v ? JSON.parse(v) : null);
+
+    return values.map((v) => (v ? JSON.parse(v) : null));
   }
 }
 ```
@@ -548,7 +538,7 @@ RedisModule.forRoot({
       token: process.env.UPSTASH_RATELIMIT_TOKEN!,
     },
   },
-})
+});
 
 // Use different connections
 @Injectable()
@@ -562,7 +552,9 @@ export class MultiConnectionService {
 
   async saveSession(sessionId: string, data: SessionData): Promise<void> {
     const session = await this.redis.connection('session');
-    await session.set(`session:${sessionId}`, JSON.stringify(data), { ex: 86400 });
+    await session.set(`session:${sessionId}`, JSON.stringify(data), {
+      ex: 86400,
+    });
   }
 
   async checkRateLimit(userId: string): Promise<boolean> {
@@ -584,7 +576,7 @@ export class ResilientCacheService {
     try {
       const connection = await this.redis.connection();
       const cached = await connection.get(key);
-      
+
       if (cached) {
         return JSON.parse(cached);
       }
@@ -663,4 +655,5 @@ describe('UserService', () => {
 4. **Use namespaced keys**: Organize keys with prefixes
 5. **Monitor cache hit rates**: Track performance metrics
 6. **Clean up on shutdown**: Call `disconnectAll()` during shutdown
-7. **Use appropriate connections**: Separate cache, session, and rate limiting data
+7. **Use appropriate connections**: Separate cache, session, and rate limiting
+   data

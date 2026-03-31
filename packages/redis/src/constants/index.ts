@@ -1,6 +1,6 @@
 /**
  * Redis constants
- * 
+ *
  * @packageDocumentation
  */
 

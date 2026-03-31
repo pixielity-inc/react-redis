@@ -1,6 +1,6 @@
 /**
  * Redis connection implementations
- * 
+ *
  * @packageDocumentation
  */
 
