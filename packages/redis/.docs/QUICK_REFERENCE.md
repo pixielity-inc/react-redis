@@ -1,15 +1,15 @@
-# @pixielity/redis - Quick Reference
+# @abdokouta/redis - Quick Reference
 
 ## Installation
 
 ```bash
-npm install @pixielity/redis @upstash/redis
+npm install @abdokouta/redis @upstash/redis
 ```
 
 ## Setup
 
 ```typescript
-import { RedisModule } from '@pixielity/redis';
+import { RedisModule } from '@abdokouta/redis';
 
 RedisModule.forRoot({
   default: 'cache',
@@ -25,7 +25,7 @@ RedisModule.forRoot({
 ## Service Usage
 
 ```typescript
-import { RedisService } from '@pixielity/redis';
+import { RedisService } from '@abdokouta/redis';
 
 @Injectable()
 export class MyService {
@@ -49,7 +49,7 @@ export class MyService {
 ## React Hooks
 
 ```typescript
-import { useRedis } from '@pixielity/redis';
+import { useRedis } from '@abdokouta/redis';
 
 function MyComponent() {
   const redis = useRedis();

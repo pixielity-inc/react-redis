@@ -1,4 +1,4 @@
-# @pixielity/redis - Usage Examples
+# @abdokouta/redis - Usage Examples
 
 Comprehensive examples for using the Redis package in various scenarios.
 
@@ -16,8 +16,8 @@ Comprehensive examples for using the Redis package in various scenarios.
 
 ```typescript
 // app.module.ts
-import { Module } from '@pixielity/container';
-import { RedisModule } from '@pixielity/redis';
+import { Module } from '@abdokouta/container';
+import { RedisModule } from '@abdokouta/redis';
 
 @Module({
   imports: [
@@ -53,8 +53,8 @@ UPSTASH_REDIS_REST_TOKEN=your-token-here
 ### Basic Cache Operations
 
 ```typescript
-import { Injectable } from '@pixielity/container';
-import { RedisService } from '@pixielity/redis';
+import { Injectable } from '@abdokouta/container';
+import { RedisService } from '@abdokouta/redis';
 
 @Injectable()
 export class CacheService {
@@ -87,8 +87,8 @@ export class CacheService {
 ### User Service with Caching
 
 ```typescript
-import { Injectable } from '@pixielity/container';
-import { RedisService } from '@pixielity/redis';
+import { Injectable } from '@abdokouta/container';
+import { RedisService } from '@abdokouta/redis';
 
 interface User {
   id: string;
@@ -155,7 +155,7 @@ export class UserService {
 ### Basic Hook Usage
 
 ```typescript
-import { useRedis } from '@pixielity/redis';
+import { useRedis } from '@abdokouta/redis';
 import { useEffect, useState } from 'react';
 
 function UserProfile({ userId }: { userId: string }) {
@@ -205,7 +205,7 @@ function UserProfile({ userId }: { userId: string }) {
 ### Custom Cache Hook
 
 ```typescript
-import { useRedis } from '@pixielity/redis';
+import { useRedis } from '@abdokouta/redis';
 import { useEffect, useState } from 'react';
 
 function useCache<T>(key: string, fetcher: () => Promise<T>, ttl: number = 3600) {
@@ -612,8 +612,8 @@ export class ResilientCacheService {
 ### Testing
 
 ```typescript
-import { Test } from '@pixielity/testing';
-import { RedisModule, RedisService } from '@pixielity/redis';
+import { Test } from '@abdokouta/testing';
+import { RedisModule, RedisService } from '@abdokouta/redis';
 
 describe('UserService', () => {
   let userService: UserService;

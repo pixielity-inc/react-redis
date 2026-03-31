@@ -3,13 +3,13 @@
  * 
  * @remarks
  * This hook provides a convenient way to access the Redis service in React
- * components. It integrates with @pixielity/container's dependency injection
+ * components. It integrates with @abdokouta/react-di's dependency injection
  * system to retrieve the Redis service instance.
  * 
  * @packageDocumentation
  */
 
-import { useInject } from '@pixielity/container';
+import { useInject } from '@abdokouta/react-di';
 import { RedisService } from '@/services/redis.service';
 import { RedisModule } from '@/redis.module';
 import type { RedisConnection } from '@/interfaces';
@@ -31,7 +31,7 @@ import type { RedisConnection } from '@/interfaces';
  * 
  * @example
  * ```typescript
- * import { useRedis } from '@pixielity/redis';
+ * import { useRedis } from '@abdokouta/redis';
  * 
  * function UserProfile({ userId }: { userId: string }) {
  *   const redis = useRedis();
@@ -111,7 +111,7 @@ export function useRedis(): RedisService {
  * 
  * @example
  * ```typescript
- * import { useRedisConnection } from '@pixielity/redis';
+ * import { useRedisConnection } from '@abdokouta/redis';
  * 
  * function CacheManager() {
  *   const [connection, setConnection] = useState<RedisConnection | null>(null);

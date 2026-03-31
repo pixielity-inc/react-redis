@@ -10,7 +10,7 @@
  */
 
 import { Redis } from '@upstash/redis';
-import { Injectable } from '@pixielity/container';
+import { Injectable } from '@abdokouta/react-di';
 import { UpstashConnection } from '@/connections/upstash.connection';
 import type { RedisConnector, RedisConnection, RedisConnectionConfig } from '@/interfaces';
 
@@ -23,7 +23,7 @@ import type { RedisConnector, RedisConnection, RedisConnectionConfig } from '@/i
  * configuration.
  * 
  * The connector is injectable and can be used with dependency injection
- * frameworks like @pixielity/container.
+ * frameworks like @abdokouta/react-di.
  * 
  * @example
  * ```typescript

@@ -1,4 +1,4 @@
-# @pixielity/redis
+# @abdokouta/redis
 
 Client-side Redis connection management using Upstash HTTP API for Refine applications.
 
@@ -6,7 +6,7 @@ Client-side Redis connection management using Upstash HTTP API for Refine applic
 
 - ✅ **Browser-Compatible**: Uses Upstash HTTP REST API (no Node.js required)
 - ✅ **Multiple Connections**: Support for named connections (cache, session, etc.)
-- ✅ **Dependency Injection**: Integrates with @pixielity/container
+- ✅ **Dependency Injection**: Integrates with @abdokouta/container
 - ✅ **React Hooks**: Easy-to-use hooks for React components
 - ✅ **TypeScript**: Full type safety with comprehensive JSDoc
 - ✅ **Production-Ready**: Error handling, retries, and timeouts
@@ -15,11 +15,11 @@ Client-side Redis connection management using Upstash HTTP API for Refine applic
 ## Installation
 
 ```bash
-npm install @pixielity/redis @upstash/redis
+npm install @abdokouta/redis @upstash/redis
 # or
-yarn add @pixielity/redis @upstash/redis
+yarn add @abdokouta/redis @upstash/redis
 # or
-pnpm add @pixielity/redis @upstash/redis
+pnpm add @abdokouta/redis @upstash/redis
 ```
 
 ## Quick Start
@@ -34,8 +34,8 @@ pnpm add @pixielity/redis @upstash/redis
 
 ```typescript
 // app.module.ts
-import { Module } from '@pixielity/container';
-import { RedisModule } from '@pixielity/redis';
+import { Module } from '@abdokouta/container';
+import { RedisModule } from '@abdokouta/redis';
 
 @Module({
   imports: [
@@ -58,8 +58,8 @@ export class AppModule {}
 #### In Services (with DI)
 
 ```typescript
-import { Injectable } from '@pixielity/container';
-import { RedisService } from '@pixielity/redis';
+import { Injectable } from '@abdokouta/container';
+import { RedisService } from '@abdokouta/redis';
 
 @Injectable()
 export class UserService {
@@ -85,7 +85,7 @@ export class UserService {
 #### In React Components (with Hooks)
 
 ```typescript
-import { useRedis } from '@pixielity/redis';
+import { useRedis } from '@abdokouta/redis';
 import { useEffect, useState } from 'react';
 
 function UserProfile({ userId }: { userId: string }) {
@@ -467,7 +467,7 @@ import type {
   RedisConnectionConfig,
   SetOptions,
   RedisPipeline,
-} from '@pixielity/redis';
+} from '@abdokouta/redis';
 ```
 
 ## Browser Compatibility
@@ -495,5 +495,5 @@ Contributions are welcome! Please read our contributing guidelines before submit
 
 ## Related Packages
 
-- [@pixielity/cache](../cache) - Multi-driver cache system
+- [@abdokouta/cache](../cache) - Multi-driver cache system
 - [@upstash/redis](https://github.com/upstash/upstash-redis) - Upstash Redis client

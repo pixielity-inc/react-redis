@@ -3,7 +3,7 @@
  * 
  * @remarks
  * This module configures the Redis service and its dependencies for use
- * with @pixielity/container's dependency injection system.
+ * with @abdokouta/react-di's dependency injection system.
  * 
  * The module follows the dynamic module pattern, allowing configuration
  * to be provided at runtime via the forRoot() method.
@@ -11,7 +11,7 @@
  * @packageDocumentation
  */
 
-import { Module, forRoot, type DynamicModule } from '@pixielity/container';
+import { Module, forRoot, type DynamicModule } from '@abdokouta/react-di';
 import { RedisService } from '@/services/redis.service';
 import { UpstashConnector } from '@/connectors/upstash.connector';
 import { REDIS_CONFIG, REDIS_CONNECTOR } from '@/constants/tokens.constant';
@@ -25,15 +25,15 @@ import type { RedisConfig } from '@/interfaces';
  * - RedisService for connection management and operations
  * - Automatic configuration of Upstash connector
  * - Support for multiple named connections
- * - Integration with @pixielity/container DI system
+ * - Integration with @abdokouta/react-di DI system
  * 
  * The module uses the dynamic module pattern to accept runtime configuration.
  * 
  * @example
  * ```typescript
  * // app.module.ts
- * import { Module } from '@pixielity/container';
- * import { RedisModule } from '@pixielity/redis';
+ * import { Module } from '@abdokouta/react-di';
+ * import { RedisModule } from '@abdokouta/redis';
  * 
  * @Module({
  *   imports: [
@@ -59,8 +59,8 @@ import type { RedisConfig } from '@/interfaces';
  * @example
  * ```typescript
  * // Using Redis in a service
- * import { Injectable } from '@pixielity/container';
- * import { RedisService } from '@pixielity/redis';
+ * import { Injectable } from '@abdokouta/react-di';
+ * import { RedisService } from '@abdokouta/redis';
  * 
  * @Injectable()
  * export class UserService {

@@ -1,5 +1,5 @@
 /**
- * Type declarations for Vitest in @pixielity/redis
+ * Type declarations for Vitest in @abdokouta/redis
  */
 
 declare module "vitest" {

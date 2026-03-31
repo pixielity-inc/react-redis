@@ -10,9 +10,9 @@
  * 
  * The RedisModule follows the dynamic module pattern, allowing runtime
  * configuration to be provided via the forRoot() method. This is the
- * standard pattern for configurable modules in @pixielity/container.
+ * standard pattern for configurable modules in @abdokouta/react-di.
  * 
- * @module @pixielity/redis
+ * @module @abdokouta/redis
  * @category Tests
  */
 

@@ -1,5 +1,5 @@
 /**
- * @fileoverview Vitest setup file for @pixielity/redis package
+ * @fileoverview Vitest setup file for @abdokouta/redis package
  * 
  * This file configures the testing environment before running tests.
  * 
@@ -9,19 +9,19 @@
  * - Test environment setup
  * - Container mocking for DI tests
  * 
- * @module @pixielity/redis
+ * @module @abdokouta/redis
  * @category Configuration
  */
 
 import { expect, beforeEach, afterEach, vi } from "vitest";
 
 /**
- * Mock @pixielity/container decorators
+ * Mock @abdokouta/react-di decorators
  * 
  * This ensures that Injectable and Inject decorators work in tests
  * without requiring the full DI container setup.
  */
-vi.mock("@pixielity/container", () => ({
+vi.mock("@abdokouta/react-di", () => ({
   Injectable: () => (target: any) => target,
   Inject: () => (target: any, propertyKey: string, parameterIndex: number) => {},
   Module: () => (target: any) => target,

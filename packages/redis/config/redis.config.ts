@@ -1,7 +1,7 @@
 /**
  * Redis Configuration
  * 
- * Configuration for the @pixielity/redis package.
+ * Configuration for the @abdokouta/redis package.
  * Provides client-side Redis connection management using Upstash HTTP API.
  * 
  * @module config/redis
@@ -17,7 +17,7 @@
  * ```
  */
 
-import type { RedisConfig } from '@pixielity/redis';
+import type { RedisConfig } from '@abdokouta/redis';
 
 /**
  * Redis configuration

@@ -12,7 +12,7 @@
  * @packageDocumentation
  */
 
-import { Injectable, Inject } from '@pixielity/container';
+import { Injectable, Inject } from '@abdokouta/react-di';
 import type { RedisConnection, RedisConfig, RedisConnector } from '@/interfaces';
 import { REDIS_CONFIG, REDIS_CONNECTOR } from '@/constants/tokens.constant';
 
@@ -26,7 +26,7 @@ import { REDIS_CONFIG, REDIS_CONNECTOR } from '@/constants/tokens.constant';
  * - Connection pooling and reuse
  * - Graceful cleanup and disconnection
  * 
- * The service is injectable and integrates with @pixielity/container's
+ * The service is injectable and integrates with @abdokouta/react-di's
  * dependency injection system.
  * 
  * @example
