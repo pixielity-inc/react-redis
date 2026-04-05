@@ -1,5 +1,5 @@
 /**
- * @abdokouta/redis
+ * @abdokouta/react-redis
  *
  * Client-side Redis connection management for browser environments using the
  * Upstash HTTP REST API. Provides browser-compatible Redis operations without
@@ -16,7 +16,7 @@
  * @example
  * Basic setup with dependency injection:
  * ```tsx
- * import { RedisModule } from '@abdokouta/redis';
+ * import { RedisModule } from '@abdokouta/react-redis';
  *
  * @Module({
  *   imports: [
@@ -37,7 +37,7 @@
  * @example
  * Using the Redis service:
  * ```tsx
- * import { RedisService } from '@abdokouta/redis';
+ * import { RedisService } from '@abdokouta/react-redis';
  *
  * @Injectable()
  * class CacheService {
@@ -54,7 +54,7 @@
  * @example
  * Using React hooks:
  * ```tsx
- * import { useRedis } from '@abdokouta/redis';
+ * import { useRedis } from '@abdokouta/react-redis';
  *
  * function CacheComponent() {
  *   const redis = useRedis();
@@ -70,7 +70,7 @@
  * @example
  * Using multiple connections:
  * ```tsx
- * import { useRedisConnection } from '@abdokouta/redis';
+ * import { useRedisConnection } from '@abdokouta/react-redis';
  *
  * function MultiConnectionComponent() {
  *   const mainRedis = useRedisConnection('main');
@@ -80,7 +80,7 @@
  * }
  * ```
  *
- * @module @abdokouta/redis
+ * @module @abdokouta/react-redis
  */
 
 // ============================================================================

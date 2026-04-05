@@ -33,7 +33,7 @@ import type { RedisConfig } from "@/interfaces";
  * ```typescript
  * // app.module.ts
  * import { Module } from '@abdokouta/react-di';
- * import { RedisModule } from '@abdokouta/redis';
+ * import { RedisModule } from '@abdokouta/react-redis';
  *
  * @Module({
  *   imports: [
@@ -60,7 +60,7 @@ import type { RedisConfig } from "@/interfaces";
  * ```typescript
  * // Using Redis in a service
  * import { Injectable } from '@abdokouta/react-di';
- * import { RedisService } from '@abdokouta/redis';
+ * import { RedisService } from '@abdokouta/react-redis';
  *
  * @Injectable()
  * export class UserService {

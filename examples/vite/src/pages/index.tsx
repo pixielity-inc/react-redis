@@ -65,7 +65,7 @@ export default function IndexPage() {
             size="lg"
             variant="outline"
             onPress={() =>
-              window.open("https://github.com/abdokouta/redis", "_blank")
+              window.open("https://github.com/abdokouta/react-redis", "_blank")
             }
           >
             <GithubIcon size={20} />

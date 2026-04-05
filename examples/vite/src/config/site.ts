@@ -15,8 +15,8 @@ export const siteConfig = {
     { label: "Advanced", href: "/advanced" },
   ],
   links: {
-    github: "https://github.com/abdokouta/redis",
-    docs: "https://github.com/abdokouta/redis#readme",
+    github: "https://github.com/abdokouta/react-redis",
+    docs: "https://github.com/abdokouta/react-redis#readme",
     twitter: "https://twitter.com/abdokouta",
     discord: "https://discord.gg/abdokouta",
     sponsor: "https://github.com/sponsors/abdokouta",

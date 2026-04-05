@@ -31,7 +31,7 @@ import type { RedisConnection } from "@/interfaces";
  *
  * @example
  * ```typescript
- * import { useRedis } from '@abdokouta/redis';
+ * import { useRedis } from '@abdokouta/react-redis';
  *
  * function UserProfile({ userId }: { userId: string }) {
  *   const redis = useRedis();
@@ -111,7 +111,7 @@ export function useRedis(): RedisService {
  *
  * @example
  * ```typescript
- * import { useRedisConnection } from '@abdokouta/redis';
+ * import { useRedisConnection } from '@abdokouta/react-redis';
  *
  * function CacheManager() {
  *   const [connection, setConnection] = useState<RedisConnection | null>(null);
