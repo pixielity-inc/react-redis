@@ -9,7 +9,7 @@ import { Provider } from "./provider.tsx";
 import { AppModule } from "@/modules/app.module";
 import "@/styles/globals.css";
 
-// Initialize container BEFORE React renders
+// Initialize DI container
 Container.configure()
   .withModule(AppModule)
   .withLogLevel(import.meta.env.DEV ? "debug" : "info")

@@ -1,5 +1,5 @@
 {
-  "name": "react-redis-example",
+  "name": "refine-example",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@abdokouta/react-di": "^2.0.0",
-    "@abdokouta/react-redis": "workspace:*",
+    "@abdokouta/refine": "workspace:*",
     "@heroui/react": "3.0.1",
     "@heroui/styles": "3.0.1",
+    "@refinedev/core": "^4.56.0",
+    "@refinedev/simple-rest": "^5.0.8",
     "clsx": "2.1.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
