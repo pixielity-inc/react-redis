@@ -11,6 +11,7 @@ Complete Laravel-inspired logging system for Refine with multiple channels, tran
 ## Architecture
 
 ### Core Principle: NO LoggerManager
+
 - **LoggerService** handles channels internally (simplified architecture)
 - No separate manager class - service manages everything
 - Follows the same pattern as CacheService
@@ -66,17 +67,19 @@ Configure different channels for different purposes:
 ```typescript
 LoggerModule.forRoot(
   defineConfig({
-    default: 'console',
+    default: "console",
     channels: {
       console: { transporters: [new ConsoleTransporter()] },
       storage: { transporters: [new StorageTransporter()] },
-      errors: { transporters: [
-        new ConsoleTransporter({ level: LogLevel.Error }),
-        new StorageTransporter({ key: 'error-logs' }),
-      ]},
+      errors: {
+        transporters: [
+          new ConsoleTransporter({ level: LogLevel.Error }),
+          new StorageTransporter({ key: "error-logs" }),
+        ],
+      },
     },
-  })
-)
+  }),
+);
 ```
 
 ### 2. Pluggable Transporters
@@ -94,9 +97,9 @@ LoggerModule.forRoot(
 ### 4. Contextual Logging
 
 ```typescript
-logger.withContext({ userId: '123', requestId: 'abc' });
-logger.info('User action'); // Includes context
-logger.withoutContext(['userId']); // Remove context
+logger.withContext({ userId: "123", requestId: "abc" });
+logger.info("User action"); // Includes context
+logger.withoutContext(["userId"]); // Remove context
 ```
 
 ### 5. React Hooks
@@ -104,13 +107,13 @@ logger.withoutContext(['userId']); // Remove context
 ```typescript
 // Access logger in components
 const logger = useLogger();
-logger.info('Component rendered');
+logger.info("Component rendered");
 
 // Use specific channel
-const errorLogger = useLogger('errors');
+const errorLogger = useLogger("errors");
 
 // Manage context automatically
-useLoggerContext({ component: 'UserProfile', userId });
+useLoggerContext({ component: "UserProfile", userId });
 ```
 
 ### 6. Dependency Injection
@@ -118,12 +121,10 @@ useLoggerContext({ component: 'UserProfile', userId });
 ```typescript
 @Injectable()
 export class UserService {
-  constructor(
-    @Inject(LoggerService) private logger: LoggerService
-  ) {}
+  constructor(@Inject(LoggerService) private logger: LoggerService) {}
 
   async createUser(data: UserData) {
-    this.logger.info('Creating user', { email: data.email });
+    this.logger.info("Creating user", { email: data.email });
   }
 }
 ```
@@ -133,14 +134,14 @@ export class UserService {
 ### Using defineConfig
 
 ```typescript
-import { defineConfig } from '@abdokouta/logger';
+import { defineConfig } from "@abdokouta/logger";
 
 export const loggerConfig = defineConfig({
-  default: 'console',
+  default: "console",
   channels: {
     console: {
       transporters: [new ConsoleTransporter()],
-      context: { app: 'my-app' },
+      context: { app: "my-app" },
     },
   },
 });
@@ -149,7 +150,7 @@ export const loggerConfig = defineConfig({
 ### Using Presets
 
 ```typescript
-import { consolePreset, silentPreset } from '@abdokouta/logger';
+import { consolePreset, silentPreset } from "@abdokouta/logger";
 
 // Development
 export const devConfig = defineConfig(consolePreset);
@@ -163,6 +164,7 @@ export const testConfig = defineConfig(silentPreset);
 ✅ **Type Check**: Passing
 ✅ **Build**: Successful
 ✅ **Output Files**:
+
 - `dist/index.js` (27KB) - CommonJS
 - `dist/index.mjs` (26KB) - ES Module
 - `dist/index.d.ts` (40KB) - TypeScript declarations
@@ -170,10 +172,12 @@ export const testConfig = defineConfig(silentPreset);
 ## Dependencies
 
 ### Peer Dependencies
+
 - `@abdokouta/container` - For dependency injection
 - `react` (optional) - For React hooks
 
 ### Dev Dependencies
+
 - `typescript` - Type checking
 - `tsup` - Build tool
 - `@types/react` - React types
@@ -185,19 +189,17 @@ export const testConfig = defineConfig(silentPreset);
 ```typescript
 @Injectable()
 export class PaymentService {
-  constructor(
-    @Inject(LoggerService) private logger: LoggerService
-  ) {}
+  constructor(@Inject(LoggerService) private logger: LoggerService) {}
 
   async processPayment(orderId: string, amount: number) {
-    this.logger.info('Processing payment', { orderId, amount });
-    
+    this.logger.info("Processing payment", { orderId, amount });
+
     try {
       const result = await this.chargeCard(orderId, amount);
-      this.logger.info('Payment successful', { orderId });
+      this.logger.info("Payment successful", { orderId });
       return result;
     } catch (error) {
-      this.logger.error('Payment failed', { orderId, error });
+      this.logger.error("Payment failed", { orderId, error });
       throw error;
     }
   }
@@ -209,7 +211,7 @@ export class PaymentService {
 ```typescript
 function UserProfile({ userId }: { userId: string }) {
   const logger = useLogger();
-  
+
   useEffect(() => {
     logger.info('Profile viewed', { userId });
   }, [userId]);
@@ -223,17 +225,15 @@ function UserProfile({ userId }: { userId: string }) {
 ```typescript
 @Injectable()
 export class AuditService {
-  constructor(
-    @Inject(LoggerService) private logger: LoggerService
-  ) {}
+  constructor(@Inject(LoggerService) private logger: LoggerService) {}
 
   async logAction(action: string, data: any) {
     // Log to audit channel
-    const auditLogger = this.logger.channel('audit');
-    auditLogger.info('User action', { action, data });
-    
+    const auditLogger = this.logger.channel("audit");
+    auditLogger.info("User action", { action, data });
+
     // Also log to default channel
-    this.logger.info('Action logged', { action });
+    this.logger.info("Action logged", { action });
   }
 }
 ```
@@ -261,12 +261,13 @@ import type {
   LogLevel,
   TransporterInterface,
   FormatterInterface,
-} from '@abdokouta/logger';
+} from "@abdokouta/logger";
 ```
 
 ## Browser Compatibility
 
 Works in all modern browsers:
+
 - Chrome 80+
 - Firefox 75+
 - Safari 13.1+

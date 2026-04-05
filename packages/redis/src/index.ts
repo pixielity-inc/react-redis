@@ -116,6 +116,8 @@ export type { RedisConfig, RedisConnectionConfig } from './interfaces/redis-conf
 
 export type { RedisConnector } from './interfaces/redis-connector.interface';
 
+export type { IRedisService } from './interfaces/redis-service.interface';
+
 // ============================================================================
 // Constants/Tokens
 // ============================================================================

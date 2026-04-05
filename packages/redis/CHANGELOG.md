@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.4] - 2026-04-05
+
+### Fixed
+
+- Replaced `forRoot` helper with inline `DynamicModule` object in `RedisModule.forRoot()` for compatibility with `@abdokouta/react-di` v2
+- Providers now correctly respect `isGlobal` flag per-provider
+
+### Added
+
+- `isGlobal` option to `RedisConfig` — controls whether Redis providers are registered globally (defaults to `true`)
+
 ## [1.0.0] - 2024-01-XX
 
 ### Added

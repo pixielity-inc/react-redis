@@ -193,4 +193,15 @@ export interface RedisConfig {
    * ```
    */
   connections: Record<string, RedisConnectionConfig>;
+
+  /**
+   * Whether to register providers globally.
+   *
+   * When true, Redis providers are available to all modules without
+   * explicit imports. When false, only modules that import RedisModule
+   * can access the service.
+   *
+   * @default true
+   */
+  isGlobal?: boolean;
 }

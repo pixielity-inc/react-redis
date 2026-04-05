@@ -11,7 +11,7 @@
  * @packageDocumentation
  */
 
-import { Module, forRoot, type DynamicModule } from '@abdokouta/react-di';
+import { Module, type DynamicModule } from '@abdokouta/react-di';
 import { RedisService } from '@/services/redis.service';
 import { UpstashConnector } from '@/connectors/upstash.connector';
 import { REDIS_CONFIG, REDIS_CONNECTOR } from '@/constants/tokens.constant';
@@ -112,23 +112,28 @@ export class RedisModule {
    * ```
    */
   static forRoot(config: RedisConfig): DynamicModule {
-    return forRoot(RedisModule, {
+    const global = config.isGlobal ?? true;
+
+    return {
+      module: RedisModule,
       providers: [
-        // Register the configuration
         {
           provide: REDIS_CONFIG,
           useValue: config,
+          isGlobal: global,
         },
-        // Register the Upstash connector
         {
           provide: REDIS_CONNECTOR,
           useClass: UpstashConnector,
+          isGlobal: global,
         },
-        // Register the Redis service
-        RedisService,
+        {
+          provide: RedisService,
+          useClass: RedisService,
+          isGlobal: global,
+        },
       ],
-      // Export the service for use in other modules
-      exports: [RedisService],
-    });
+      exports: global ? [] : [RedisService],
+    };
   }
 }

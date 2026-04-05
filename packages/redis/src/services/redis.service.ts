@@ -13,7 +13,7 @@
  */
 
 import { Injectable, Inject } from '@abdokouta/react-di';
-import type { RedisConnection, RedisConfig, RedisConnector } from '@/interfaces';
+import type { RedisConnection, RedisConfig, RedisConnector, IRedisService } from '@/interfaces';
 import { REDIS_CONFIG, REDIS_CONNECTOR } from '@/constants/tokens.constant';
 
 /**
@@ -56,7 +56,7 @@ import { REDIS_CONFIG, REDIS_CONNECTOR } from '@/constants/tokens.constant';
  * ```
  */
 @Injectable()
-export class RedisService {
+export class RedisService implements IRedisService {
   /**
    * Internal cache of active connections
    *
