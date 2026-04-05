@@ -4,5 +4,5 @@
  * @packageDocumentation
  */
 
-export * from './connection.base';
-export * from './upstash.connection';
+export * from "./connection.base";
+export * from "./upstash.connection";

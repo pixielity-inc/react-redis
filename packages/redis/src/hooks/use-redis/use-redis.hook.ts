@@ -9,10 +9,10 @@
  * @packageDocumentation
  */
 
-import { useInject } from '@abdokouta/react-di';
-import { RedisService } from '@/services/redis.service';
-import { RedisModule } from '@/redis.module';
-import type { RedisConnection } from '@/interfaces';
+import { useInject } from "@abdokouta/react-di";
+import { RedisService } from "@/services/redis.service";
+import { RedisModule } from "@/redis.module";
+import type { RedisConnection } from "@/interfaces";
 
 /**
  * Hook for accessing Redis service in React components

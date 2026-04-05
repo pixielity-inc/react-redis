@@ -11,11 +11,11 @@
  * @packageDocumentation
  */
 
-import { Module, type DynamicModule } from '@abdokouta/react-di';
-import { RedisService } from '@/services/redis.service';
-import { UpstashConnector } from '@/connectors/upstash.connector';
-import { REDIS_CONFIG, REDIS_CONNECTOR } from '@/constants/tokens.constant';
-import type { RedisConfig } from '@/interfaces';
+import { Module, type DynamicModule } from "@abdokouta/react-di";
+import { RedisService } from "@/services/redis.service";
+import { UpstashConnector } from "@/connectors/upstash.connector";
+import { REDIS_CONFIG, REDIS_CONNECTOR } from "@/constants/tokens.constant";
+import type { RedisConfig } from "@/interfaces";
 
 /**
  * Redis module for configuring Redis connections

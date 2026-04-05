@@ -1,41 +1,37 @@
 {
-  "name": "@abdokouta/refine-monorepo",
-  "version": "0.0.0",
+  "name": "@abdokouta/react-redis-monorepo",
+  "version": "1.0.0",
   "private": true,
-  "description": "Refine Framework integration with dependency injection for React applications",
-  "license": "MIT",
-  "author": {
-    "name": "Abdelrhman Kouta",
-    "email": "abdelrhman@pixielity.com",
-    "url": "https://github.com/abdokouta"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/abdokouta/refine.git"
-  },
-  "packageManager": "pnpm@9.15.0",
-  "engines": {
-    "node": ">=18.0.0",
-    "pnpm": ">=9.0.0"
-  },
+  "description": "Client-side Redis connection management using Upstash HTTP API for React",
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "clean": "turbo run clean && rm -rf node_modules",
-    "typecheck": "turbo run typecheck",
+    "start": "turbo run start",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
-    "test:coverage": "turbo run test:coverage",
-    "release": "turbo run release",
-    "prepare": "husky || true"
+    "check-types": "turbo run check-types",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yaml,yml}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,yaml,yml}\"",
+    "clean": "turbo run clean && rm -rf .turbo",
+    "clean:all": "find . -type d \\( -name node_modules -o -name dist -o -name .turbo -o -name coverage -o -name .cache \\) -prune -exec rm -rf {} + && find . -type f \\( -name '*.lock' -o -name pnpm-lock.yaml -o -name yarn.lock -o -name package-lock.json \\) -delete",
+    "upgrade": "ncu -u && ncu -u --cwd packages/* && ncu -u --cwd examples/* && pnpm install"
   },
   "devDependencies": {
-    "husky": "^9.1.7",
     "prettier": "^3.8.1",
-    "turbo": "^2.5.4"
-  }
+    "turbo": "^2.9.3",
+    "eslint": "*",
+    "@nesvel/eslint-config": "*",
+    "typescript": "5.9.2"
+  },
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=10"
+  },
+  "packageManager": "pnpm@10.33.0"
 }

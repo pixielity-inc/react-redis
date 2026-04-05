@@ -4,4 +4,4 @@
  * @packageDocumentation
  */
 
-export * from './upstash.connector';
+export * from "./upstash.connector";

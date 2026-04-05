@@ -9,10 +9,14 @@
  * @packageDocumentation
  */
 
-import { Redis } from '@upstash/redis';
-import { Injectable } from '@abdokouta/react-di';
-import { UpstashConnection } from '@/connections/upstash.connection';
-import type { RedisConnector, RedisConnection, RedisConnectionConfig } from '@/interfaces';
+import { Redis } from "@upstash/redis";
+import { Injectable } from "@abdokouta/react-di";
+import { UpstashConnection } from "@/connections/upstash.connection";
+import type {
+  RedisConnector,
+  RedisConnection,
+  RedisConnectionConfig,
+} from "@/interfaces";
 
 /**
  * Upstash Redis connector implementation
@@ -66,11 +70,11 @@ export class UpstashConnector implements RedisConnector {
   async connect(config: RedisConnectionConfig): Promise<RedisConnection> {
     // Validate required configuration
     if (!config.url) {
-      throw new Error('Redis URL is required');
+      throw new Error("Redis URL is required");
     }
 
     if (!config.token) {
-      throw new Error('Redis token is required');
+      throw new Error("Redis token is required");
     }
 
     // Create Upstash Redis HTTP client
@@ -86,6 +90,6 @@ export class UpstashConnector implements RedisConnector {
     // Wrap in our connection interface
     // Use 'default' as the name since this is a single connection
     // The actual name will be set by RedisManager
-    return new UpstashConnection(client, 'default');
+    return new UpstashConnection(client, "default");
   }
 }

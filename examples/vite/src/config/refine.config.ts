@@ -30,7 +30,8 @@ import dataProvider from "@refinedev/simple-rest";
  *
  * Base URL for the REST API. Can be configured via environment variables.
  */
-const API_URL = import.meta.env.VITE_API_URL || "https://api.fake-rest.refine.dev";
+const API_URL =
+  import.meta.env.VITE_API_URL || "https://api.fake-rest.refine.dev";
 
 /**
  * Refine configuration

@@ -9,7 +9,7 @@
  * @packageDocumentation
  */
 
-import type { RedisConnection, SetOptions, RedisPipeline } from '@/interfaces';
+import type { RedisConnection, SetOptions, RedisPipeline } from "@/interfaces";
 
 /**
  * Abstract base class for Redis connections
@@ -75,7 +75,11 @@ export abstract class BaseConnection implements RedisConnection {
    * @param options - Optional parameters (e.g., expiration, conditions)
    * @returns 'OK' if successful, null otherwise
    */
-  abstract set(key: string, value: string, options?: SetOptions): Promise<'OK' | null>;
+  abstract set(
+    key: string,
+    value: string,
+    options?: SetOptions,
+  ): Promise<"OK" | null>;
 
   /**
    * Delete one or more keys
@@ -124,7 +128,7 @@ export abstract class BaseConnection implements RedisConnection {
    * @param data - An object mapping keys to values
    * @returns 'OK' if successful
    */
-  abstract mset(data: Record<string, string>): Promise<'OK'>;
+  abstract mset(data: Record<string, string>): Promise<"OK">;
 
   /**
    * Increment the integer value of a key by one
@@ -197,7 +201,11 @@ export abstract class BaseConnection implements RedisConnection {
    * @param max - The maximum score (inclusive)
    * @returns The number of members removed
    */
-  abstract zremrangebyscore(key: string, min: number, max: number): Promise<number>;
+  abstract zremrangebyscore(
+    key: string,
+    min: number,
+    max: number,
+  ): Promise<number>;
 
   /**
    * Execute a Lua script on the Redis server
@@ -207,7 +215,11 @@ export abstract class BaseConnection implements RedisConnection {
    * @param args - Additional arguments to pass to the script
    * @returns The result of the script execution
    */
-  abstract eval(script: string, keys: string[], args: (string | number)[]): Promise<unknown>;
+  abstract eval(
+    script: string,
+    keys: string[],
+    args: (string | number)[],
+  ): Promise<unknown>;
 
   /**
    * Create a pipeline for batching multiple commands
@@ -221,7 +233,7 @@ export abstract class BaseConnection implements RedisConnection {
    *
    * @returns 'OK' if successful
    */
-  abstract flushdb(): Promise<'OK'>;
+  abstract flushdb(): Promise<"OK">;
 
   /**
    * Close the connection to the Redis server

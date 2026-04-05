@@ -7,7 +7,7 @@
  * @module interfaces/redis-service
  */
 
-import type { RedisConnection } from './redis-connection.interface';
+import type { RedisConnection } from "./redis-connection.interface";
 
 /**
  * IRedisService

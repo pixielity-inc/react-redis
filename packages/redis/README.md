@@ -36,13 +36,13 @@ pnpm add @abdokouta/redis @upstash/redis
 
 ```typescript
 // app.module.ts
-import { Module } from '@abdokouta/container';
-import { RedisModule } from '@abdokouta/redis';
+import { Module } from "@abdokouta/container";
+import { RedisModule } from "@abdokouta/redis";
 
 @Module({
   imports: [
     RedisModule.forRoot({
-      default: 'cache',
+      default: "cache",
       connections: {
         cache: {
           url: process.env.UPSTASH_REDIS_REST_URL!,
@@ -60,8 +60,8 @@ export class AppModule {}
 #### In Services (with DI)
 
 ```typescript
-import { Injectable } from '@abdokouta/container';
-import { RedisService } from '@abdokouta/redis';
+import { Injectable } from "@abdokouta/container";
+import { RedisService } from "@abdokouta/redis";
 
 @Injectable()
 export class UserService {
@@ -72,7 +72,7 @@ export class UserService {
     await connection.set(
       `user:${user.id}`,
       JSON.stringify(user),
-      { ex: 3600 } // Expire in 1 hour
+      { ex: 3600 }, // Expire in 1 hour
     );
   }
 
@@ -130,7 +130,7 @@ Configure multiple Redis instances for different purposes:
 
 ```typescript
 RedisModule.forRoot({
-  default: 'cache',
+  default: "cache",
   connections: {
     // Cache connection
     cache: {
@@ -210,30 +210,30 @@ Interface for Redis operations.
 
 ```typescript
 // Get/Set
-await connection.get('key');
-await connection.set('key', 'value', { ex: 3600 });
+await connection.get("key");
+await connection.set("key", "value", { ex: 3600 });
 
 // Delete
-await connection.del('key1', 'key2');
+await connection.del("key1", "key2");
 
 // Exists
-await connection.exists('key1', 'key2');
+await connection.exists("key1", "key2");
 
 // Expiration
-await connection.expire('key', 300);
-await connection.ttl('key');
+await connection.expire("key", 300);
+await connection.ttl("key");
 ```
 
 #### Multi-Key Operations
 
 ```typescript
 // Get multiple keys
-const [val1, val2] = await connection.mget('key1', 'key2');
+const [val1, val2] = await connection.mget("key1", "key2");
 
 // Set multiple keys
 await connection.mset({
-  key1: 'value1',
-  key2: 'value2',
+  key1: "value1",
+  key2: "value2",
 });
 ```
 
@@ -241,12 +241,12 @@ await connection.mset({
 
 ```typescript
 // Increment
-await connection.incr('counter');
-await connection.incrby('counter', 5);
+await connection.incr("counter");
+await connection.incrby("counter", 5);
 
 // Decrement
-await connection.decr('counter');
-await connection.decrby('counter', 3);
+await connection.decr("counter");
+await connection.decrby("counter", 3);
 ```
 
 #### Pipeline (Batching)
@@ -254,10 +254,10 @@ await connection.decrby('counter', 3);
 ```typescript
 const results = await connection
   .pipeline()
-  .set('key1', 'value1')
-  .set('key2', 'value2')
-  .get('key1')
-  .del('key3')
+  .set("key1", "value1")
+  .set("key2", "value2")
+  .get("key1")
+  .del("key3")
   .exec();
 
 console.log(results); // ['OK', 'OK', 'value1', 1]
@@ -267,13 +267,13 @@ console.log(results); // ['OK', 'OK', 'value1', 1]
 
 ```typescript
 // Add to sorted set
-await connection.zadd('leaderboard', 100, 'user:1');
+await connection.zadd("leaderboard", 100, "user:1");
 
 // Get range
-const top10 = await connection.zrange('leaderboard', 0, 9);
+const top10 = await connection.zrange("leaderboard", 0, 9);
 
 // Remove by score
-await connection.zremrangebyscore('leaderboard', 0, 50);
+await connection.zremrangebyscore("leaderboard", 0, 50);
 ```
 
 ### React Hooks
@@ -284,7 +284,7 @@ Get the Redis service instance.
 
 ```typescript
 const redis = useRedis();
-const connection = await redis.connection('cache');
+const connection = await redis.connection("cache");
 ```
 
 #### useRedisConnection(name?)
@@ -292,11 +292,11 @@ const connection = await redis.connection('cache');
 Get a specific connection (returns a Promise).
 
 ```typescript
-const getConnection = useRedisConnection('cache');
+const getConnection = useRedisConnection("cache");
 
 useEffect(() => {
   getConnection.then(async (connection) => {
-    await connection.set('key', 'value');
+    await connection.set("key", "value");
   });
 }, [getConnection]);
 ```
@@ -330,18 +330,18 @@ async function getUser(id: string): Promise<User> {
 ```typescript
 async function acquireLock(
   resource: string,
-  ttl: number = 10
+  ttl: number = 10,
 ): Promise<boolean> {
   const connection = await redis.connection();
   const lockKey = `lock:${resource}`;
 
   // Try to acquire lock (set if not exists)
-  const acquired = await connection.set(lockKey, 'locked', {
+  const acquired = await connection.set(lockKey, "locked", {
     nx: true,
     ex: ttl,
   });
 
-  return acquired === 'OK';
+  return acquired === "OK";
 }
 
 async function releaseLock(resource: string): Promise<void> {
@@ -356,7 +356,7 @@ async function releaseLock(resource: string): Promise<void> {
 async function checkRateLimit(
   userId: string,
   limit: number = 100,
-  window: number = 60
+  window: number = 60,
 ): Promise<boolean> {
   const connection = await redis.connection();
   const key = `ratelimit:${userId}`;
@@ -377,18 +377,18 @@ async function checkRateLimit(
 ```typescript
 async function saveSession(
   sessionId: string,
-  data: SessionData
+  data: SessionData,
 ): Promise<void> {
-  const connection = await redis.connection('session');
+  const connection = await redis.connection("session");
   await connection.set(
     `session:${sessionId}`,
     JSON.stringify(data),
-    { ex: 86400 } // 24 hours
+    { ex: 86400 }, // 24 hours
   );
 }
 
 async function getSession(sessionId: string): Promise<SessionData | null> {
-  const connection = await redis.connection('session');
+  const connection = await redis.connection("session");
   const data = await connection.get(`session:${sessionId}`);
   return data ? JSON.parse(data) : null;
 }
@@ -402,10 +402,10 @@ Always set expiration times to prevent memory leaks:
 
 ```typescript
 // Good
-await connection.set('temp:data', value, { ex: 300 });
+await connection.set("temp:data", value, { ex: 300 });
 
 // Bad (no expiration)
-await connection.set('temp:data', value);
+await connection.set("temp:data", value);
 ```
 
 ### 2. Use Pipelines for Multiple Operations
@@ -416,15 +416,15 @@ Batch operations for better performance:
 // Good
 await connection
   .pipeline()
-  .set('key1', 'value1')
-  .set('key2', 'value2')
-  .set('key3', 'value3')
+  .set("key1", "value1")
+  .set("key2", "value2")
+  .set("key3", "value3")
   .exec();
 
 // Bad (3 HTTP requests)
-await connection.set('key1', 'value1');
-await connection.set('key2', 'value2');
-await connection.set('key3', 'value3');
+await connection.set("key1", "value1");
+await connection.set("key2", "value2");
+await connection.set("key3", "value3");
 ```
 
 ### 3. Handle Errors Gracefully
@@ -432,9 +432,9 @@ await connection.set('key3', 'value3');
 ```typescript
 try {
   const connection = await redis.connection();
-  await connection.set('key', 'value');
+  await connection.set("key", "value");
 } catch (error) {
-  console.error('Redis error:', error);
+  console.error("Redis error:", error);
   // Fall back to database or return cached data
 }
 ```
@@ -468,7 +468,7 @@ import type {
   RedisConnectionConfig,
   SetOptions,
   RedisPipeline,
-} from '@abdokouta/redis';
+} from "@abdokouta/redis";
 ```
 
 ## Browser Compatibility

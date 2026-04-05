@@ -25,7 +25,7 @@
  * }
  * ```
  */
-export const REDIS_CONFIG = Symbol.for('REDIS_CONFIG');
+export const REDIS_CONFIG = Symbol.for("REDIS_CONFIG");
 
 /**
  * Injection token for Redis connector
@@ -44,4 +44,4 @@ export const REDIS_CONFIG = Symbol.for('REDIS_CONFIG');
  * }
  * ```
  */
-export const REDIS_CONNECTOR = Symbol.for('REDIS_CONNECTOR');
+export const REDIS_CONNECTOR = Symbol.for("REDIS_CONNECTOR");

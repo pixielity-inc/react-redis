@@ -4,4 +4,4 @@
  * @packageDocumentation
  */
 
-export * from './tokens.constant';
+export * from "./tokens.constant";

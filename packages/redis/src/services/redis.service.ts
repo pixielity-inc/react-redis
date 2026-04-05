@@ -12,9 +12,14 @@
  * @packageDocumentation
  */
 
-import { Injectable, Inject } from '@abdokouta/react-di';
-import type { RedisConnection, RedisConfig, RedisConnector, IRedisService } from '@/interfaces';
-import { REDIS_CONFIG, REDIS_CONNECTOR } from '@/constants/tokens.constant';
+import { Injectable, Inject } from "@abdokouta/react-di";
+import type {
+  RedisConnection,
+  RedisConfig,
+  RedisConnector,
+  IRedisService,
+} from "@/interfaces";
+import { REDIS_CONFIG, REDIS_CONNECTOR } from "@/constants/tokens.constant";
 
 /**
  * Redis service for connection management and operations
@@ -78,7 +83,7 @@ export class RedisService implements IRedisService {
    */
   constructor(
     @Inject(REDIS_CONFIG) private readonly config: RedisConfig,
-    @Inject(REDIS_CONNECTOR) private readonly connector: RedisConnector
+    @Inject(REDIS_CONNECTOR) private readonly connector: RedisConnector,
   ) {}
 
   /**
@@ -148,7 +153,7 @@ export class RedisService implements IRedisService {
     if (!connectionConfig) {
       throw new Error(
         `Redis connection [${name}] not configured. ` +
-          `Available connections: ${Object.keys(this.config.connections).join(', ')}`
+          `Available connections: ${Object.keys(this.config.connections).join(", ")}`,
       );
     }
 
@@ -211,7 +216,9 @@ export class RedisService implements IRedisService {
    */
   async disconnectAll(): Promise<void> {
     // Disconnect all connections in parallel
-    await Promise.all(Array.from(this.connections.values()).map((conn) => conn.disconnect()));
+    await Promise.all(
+      Array.from(this.connections.values()).map((conn) => conn.disconnect()),
+    );
 
     // Clear the connection cache
     this.connections.clear();
