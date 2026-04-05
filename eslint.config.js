@@ -1,9 +1,9 @@
-import nesvelConfig from "@nesvel/eslint-config";
+import nesvelConfig from '@nesvel/eslint-config';
 
 export default [
   ...nesvelConfig,
   {
-    ignores: ["dist/**", "node_modules/**", "*.config.js", "*.config.ts"],
+    ignores: ['dist/**', 'node_modules/**', '*.config.js', '*.config.ts'],
   },
   {
     rules: {

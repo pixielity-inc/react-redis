@@ -6,13 +6,17 @@
       <stop offset="100%" style="stop-color:#0f172a"/>
     </linearGradient>
     <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#14b8a6"/>
-      <stop offset="50%" style="stop-color:#2dd4bf"/>
-      <stop offset="100%" style="stop-color:#5eead4"/>
+      <stop offset="0%" style="stop-color:#dc2626"/>
+      <stop offset="50%" style="stop-color:#ef4444"/>
+      <stop offset="100%" style="stop-color:#f97316"/>
     </linearGradient>
-    <linearGradient id="refineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#14b8a6"/>
-      <stop offset="100%" style="stop-color:#2dd4bf"/>
+    <linearGradient id="redisGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dc2626"/>
+      <stop offset="100%" style="stop-color:#ef4444"/>
+    </linearGradient>
+    <linearGradient id="connGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f97316"/>
+      <stop offset="100%" style="stop-color:#fb923c"/>
     </linearGradient>
   </defs>
   
@@ -26,50 +30,55 @@
   <rect width="1200" height="400" fill="url(#grid)"/>
   
   <!-- Decorative circles -->
-  <circle cx="100" cy="100" r="150" fill="#14b8a6" opacity="0.05"/>
-  <circle cx="1100" cy="300" r="200" fill="#2dd4bf" opacity="0.05"/>
-  <circle cx="600" cy="400" r="180" fill="#5eead4" opacity="0.03"/>
+  <circle cx="100" cy="100" r="150" fill="#dc2626" opacity="0.05"/>
+  <circle cx="1100" cy="300" r="200" fill="#ef4444" opacity="0.05"/>
+  <circle cx="600" cy="400" r="180" fill="#f97316" opacity="0.03"/>
   
-  <!-- Refine/Data icon (database with arrows) -->
-  <g transform="translate(150, 200)">
-    <!-- Database cylinder -->
-    <ellipse cx="0" cy="-30" rx="35" ry="12" fill="none" stroke="url(#refineGradient)" stroke-width="2.5" opacity="0.8"/>
-    <path d="M-35 -30 L-35 30" fill="none" stroke="url(#refineGradient)" stroke-width="2.5" opacity="0.8"/>
-    <path d="M35 -30 L35 30" fill="none" stroke="url(#refineGradient)" stroke-width="2.5" opacity="0.8"/>
-    <ellipse cx="0" cy="30" rx="35" ry="12" fill="none" stroke="url(#refineGradient)" stroke-width="2.5" opacity="0.8"/>
-    <!-- Middle ellipse -->
-    <ellipse cx="0" cy="0" rx="35" ry="12" fill="none" stroke="url(#refineGradient)" stroke-width="1.5" opacity="0.5"/>
-    <!-- Refresh arrows -->
-    <path d="M-50 0 A 15 15 0 0 1 -50 -20" fill="none" stroke="url(#accentGradient)" stroke-width="2" opacity="0.6"/>
-    <path d="M50 0 A 15 15 0 0 0 50 20" fill="none" stroke="url(#accentGradient)" stroke-width="2" opacity="0.6"/>
+  <!-- Redis logo-style icon (left) -->
+  <g transform="translate(150, 195)">
+    <!-- Stacked diamond layers -->
+    <path d="M0 -30 L35 0 L0 15 L-35 0 Z" fill="none" stroke="url(#redisGradient)" stroke-width="2.5" opacity="0.7"/>
+    <path d="M0 -20 L35 10 L0 25 L-35 10 Z" fill="none" stroke="url(#redisGradient)" stroke-width="2" opacity="0.5"/>
+    <path d="M0 -10 L35 20 L0 35 L-35 20 Z" fill="none" stroke="url(#redisGradient)" stroke-width="1.5" opacity="0.3"/>
+    <!-- Center dot -->
+    <circle cx="0" cy="0" r="4" fill="#ef4444" opacity="0.9"/>
   </g>
   
-  <!-- DI/Injection icon -->
-  <g transform="translate(1050, 200)">
-    <!-- Container box -->
-    <rect x="-35" y="-35" width="70" height="70" rx="8" fill="none" stroke="url(#accentGradient)" stroke-width="2" opacity="0.7"/>
-    <!-- Inner components -->
-    <circle cx="-12" cy="-12" r="10" fill="none" stroke="url(#refineGradient)" stroke-width="2" opacity="0.6"/>
-    <circle cx="12" cy="-12" r="10" fill="none" stroke="url(#refineGradient)" stroke-width="2" opacity="0.6"/>
-    <circle cx="0" cy="15" r="10" fill="none" stroke="url(#refineGradient)" stroke-width="2" opacity="0.6"/>
-    <!-- Connection lines -->
-    <line x1="-5" y1="-5" x2="-3" y2="8" stroke="url(#accentGradient)" stroke-width="1.5" opacity="0.5"/>
-    <line x1="5" y1="-5" x2="3" y2="8" stroke="url(#accentGradient)" stroke-width="1.5" opacity="0.5"/>
+  <!-- Connection nodes (right) -->
+  <g transform="translate(1050, 195)">
+    <!-- Hub -->
+    <circle cx="0" cy="0" r="14" fill="none" stroke="url(#connGradient)" stroke-width="2.5" opacity="0.8"/>
+    <circle cx="0" cy="0" r="4" fill="#f97316" opacity="0.9"/>
+    <!-- Spokes -->
+    <line x1="14" y1="0" x2="35" y2="-20" stroke="url(#connGradient)" stroke-width="1.5" opacity="0.5"/>
+    <line x1="14" y1="0" x2="35" y2="20" stroke="url(#connGradient)" stroke-width="1.5" opacity="0.5"/>
+    <line x1="-14" y1="0" x2="-35" y2="-20" stroke="url(#connGradient)" stroke-width="1.5" opacity="0.5"/>
+    <line x1="-14" y1="0" x2="-35" y2="20" stroke="url(#connGradient)" stroke-width="1.5" opacity="0.5"/>
+    <!-- Endpoint dots -->
+    <circle cx="35" cy="-20" r="6" fill="#f97316" opacity="0.6"/>
+    <circle cx="35" cy="20" r="6" fill="#f97316" opacity="0.6"/>
+    <circle cx="-35" cy="-20" r="6" fill="#f97316" opacity="0.6"/>
+    <circle cx="-35" cy="20" r="6" fill="#f97316" opacity="0.6"/>
+    <!-- Labels -->
+    <text x="35" y="-28" text-anchor="middle" font-family="system-ui" font-size="8" fill="#fb923c" opacity="0.7">main</text>
+    <text x="35" y="36" text-anchor="middle" font-family="system-ui" font-size="8" fill="#fb923c" opacity="0.7">cache</text>
+    <text x="-35" y="-28" text-anchor="middle" font-family="system-ui" font-size="8" fill="#fb923c" opacity="0.7">session</text>
+    <text x="-35" y="36" text-anchor="middle" font-family="system-ui" font-size="8" fill="#fb923c" opacity="0.7">queue</text>
   </g>
   
   <!-- Main title -->
   <text x="600" y="170" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="700" fill="white">
-    @abdokouta/refine
+    @abdokouta/react-redis
   </text>
   
   <!-- Subtitle -->
   <text x="600" y="230" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="24" fill="#94a3b8">
-    Refine Framework Integration with Dependency Injection
+    Client-side Redis with Multiple Named Connections
   </text>
   
   <!-- Tagline with gradient -->
   <text x="600" y="280" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="20" fill="url(#accentGradient)">
-    Data Provider • CRUD Operations • React Hooks • Type-Safe
+    Upstash HTTP • MultipleInstanceManager • DI Integration • React Hooks
   </text>
   
   <!-- Bottom accent line -->

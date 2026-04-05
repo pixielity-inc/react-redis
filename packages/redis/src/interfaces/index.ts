@@ -8,7 +8,7 @@
  * @packageDocumentation
  */
 
-export * from "./redis-connection.interface";
-export * from "./redis-config.interface";
-export * from "./redis-connector.interface";
-export type { IRedisService } from "./redis-service.interface";
+export * from './redis-connection.interface';
+export * from './redis-config.interface';
+export * from './redis-connector.interface';
+export type { IRedisService } from './redis-service.interface';

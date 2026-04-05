@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { Button, Card, Chip } from "@heroui/react";
-import { useRedis } from "@abdokouta/react-redis";
+import { useState } from 'react';
+import { Button, Card, Chip } from '@heroui/react';
+import { useRedis } from '@abdokouta/react-redis';
 
-import { title, subtitle } from "@/components/primitives";
-import { GithubIcon } from "@/components/icons";
-import DefaultLayout from "@/layouts/default";
+import { title, subtitle } from '@/components/primitives';
+import { GithubIcon } from '@/components/icons';
+import DefaultLayout from '@/layouts/default';
 
 export default function IndexPage() {
   const redis = useRedis();
@@ -15,19 +15,17 @@ export default function IndexPage() {
   const handleSet = async () => {
     const conn = await redis.connection();
 
-    await conn.set(
-      "demo:greeting",
-      `Hello from Redis at ${new Date().toLocaleTimeString()}`,
-      { ex: 30 },
-    );
-    const value = await conn.get("demo:greeting");
+    await conn.set('demo:greeting', `Hello from Redis at ${new Date().toLocaleTimeString()}`, {
+      ex: 30,
+    });
+    const value = await conn.get('demo:greeting');
 
-    setResult((value as string) ?? "(empty)");
+    setResult((value as string) ?? '(empty)');
   };
 
   const handleIncrement = async () => {
     const conn = await redis.connection();
-    const value = await conn.incr("demo:counter");
+    const value = await conn.incr('demo:counter');
 
     setCounter(value);
   };
@@ -35,7 +33,7 @@ export default function IndexPage() {
   const handleFlush = async () => {
     const conn = await redis.connection();
 
-    await conn.del("demo:greeting", "demo:counter");
+    await conn.del('demo:greeting', 'demo:counter');
     setResult(null);
     setCounter(null);
   };
@@ -45,28 +43,22 @@ export default function IndexPage() {
       <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
         <div className="inline-block max-w-lg text-center justify-center">
           <span className={title()}>Browser-Compatible&nbsp;</span>
-          <span className={title({ color: "blue" })}>Redis&nbsp;</span>
+          <span className={title({ color: 'blue' })}>Redis&nbsp;</span>
           <br />
           <span className={title()}>for React</span>
-          <div className={subtitle({ class: "mt-4" })}>
+          <div className={subtitle({ class: 'mt-4' })}>
             Multiple connections, React hooks, and Upstash HTTP API
           </div>
         </div>
 
         <div className="flex gap-3">
-          <Button
-            size="lg"
-            variant="primary"
-            onPress={() => window.location.assign("/config")}
-          >
+          <Button size="lg" variant="primary" onPress={() => window.location.assign('/config')}>
             Configuration
           </Button>
           <Button
             size="lg"
             variant="outline"
-            onPress={() =>
-              window.open("https://github.com/abdokouta/react-redis", "_blank")
-            }
+            onPress={() => window.open('https://github.com/abdokouta/react-redis', '_blank')}
           >
             <GithubIcon size={20} />
             GitHub
@@ -92,9 +84,7 @@ export default function IndexPage() {
               <div className="p-3 bg-default-100 rounded text-sm mb-2">
                 <span className="font-semibold">get(): </span>
                 {result}
-                <p className="text-xs text-default-400 mt-1 italic">
-                  Stored in Redis with 30s TTL
-                </p>
+                <p className="text-xs text-default-400 mt-1 italic">Stored in Redis with 30s TTL</p>
               </div>
             )}
 
@@ -112,7 +102,7 @@ export default function IndexPage() {
         <div className="mt-6">
           <div className="flex items-center gap-2 rounded-xl bg-surface shadow-surface px-4 py-2">
             <pre className="text-sm font-medium font-mono">
-              pnpm add{" "}
+              pnpm add{' '}
               <code className="px-2 py-1 h-fit font-mono font-normal inline whitespace-nowrap rounded-sm bg-accent/20 text-accent text-sm">
                 @abdokouta/react-redis @abdokouta/ts-container
               </code>

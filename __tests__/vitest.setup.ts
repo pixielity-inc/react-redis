@@ -13,7 +13,7 @@
  * @category Configuration
  */
 
-import { expect, beforeEach, afterEach, vi } from "vitest";
+import { expect, beforeEach, afterEach, vi } from 'vitest';
 
 /**
  * Mock @abdokouta/ts-container decorators
@@ -21,10 +21,9 @@ import { expect, beforeEach, afterEach, vi } from "vitest";
  * This ensures that Injectable and Inject decorators work in tests
  * without requiring the full DI container setup.
  */
-vi.mock("@abdokouta/ts-container", () => ({
+vi.mock('@abdokouta/ts-container', () => ({
   Injectable: () => (target: any) => target,
-  Inject:
-    () => (target: any, propertyKey: string, parameterIndex: number) => {},
+  Inject: () => (target: any, propertyKey: string, parameterIndex: number) => {},
   Module: () => (target: any) => target,
   forRoot: (module: any, config: any) => config,
 }));

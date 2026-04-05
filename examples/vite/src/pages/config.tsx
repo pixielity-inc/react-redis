@@ -1,8 +1,8 @@
-import { Card, Chip, Separator } from "@heroui/react";
-import { useRedis } from "@abdokouta/react-redis";
+import { Card, Chip, Separator } from '@heroui/react';
+import { useRedis } from '@abdokouta/react-redis';
 
-import { title } from "@/components/primitives";
-import DefaultLayout from "@/layouts/default";
+import { title } from '@/components/primitives';
+import DefaultLayout from '@/layouts/default';
 
 export default function ConfigPage() {
   const redis = useRedis();
@@ -27,24 +27,18 @@ export default function ConfigPage() {
             <Card className="p-6">
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold w-40">
-                    Default Connection:
-                  </span>
+                  <span className="text-sm font-semibold w-40">Default Connection:</span>
                   <Chip color="accent" size="sm" variant="soft">
                     <Chip.Label>{defaultConnection}</Chip.Label>
                   </Chip>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold w-40">
-                    Connections:
-                  </span>
+                  <span className="text-sm font-semibold w-40">Connections:</span>
                   <div className="flex gap-1">
                     {connectionNames.map((name) => (
                       <Chip
                         key={name}
-                        color={
-                          name === defaultConnection ? "success" : "default"
-                        }
+                        color={name === defaultConnection ? 'success' : 'default'}
                         size="sm"
                         variant="soft"
                       >

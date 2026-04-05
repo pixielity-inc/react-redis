@@ -9,8 +9,8 @@
  * @packageDocumentation
  */
 
-import type { Redis } from "@upstash/redis";
-import type { RedisConnection, RedisPipeline, SetOptions } from "@/interfaces";
+import type { Redis } from '@upstash/redis';
+import type { RedisConnection, RedisPipeline, SetOptions } from '@/interfaces';
 
 /**
  * Upstash Redis connection implementation
@@ -50,7 +50,7 @@ export class UpstashConnection implements RedisConnection {
    */
   constructor(
     private readonly redis: Redis,
-    private readonly name: string,
+    private readonly name: string
   ) {}
 
   /**
@@ -103,27 +103,23 @@ export class UpstashConnection implements RedisConnection {
    * - nx: Uses SETNX for "set if not exists"
    * - xx: Uses SET XX for "set if exists"
    */
-  async set(
-    key: string,
-    value: string,
-    options?: SetOptions,
-  ): Promise<"OK" | null> {
+  async set(key: string, value: string, options?: SetOptions): Promise<'OK' | null> {
     // Handle expiration in seconds
     if (options?.ex) {
       const result = await this.redis.setex(key, options.ex, value);
-      return result as "OK";
+      return result as 'OK';
     }
 
     // Handle expiration in milliseconds
     if (options?.px) {
       const result = await this.redis.psetex(key, options.px, value);
-      return result as "OK";
+      return result as 'OK';
     }
 
     // Handle "set if not exists"
     if (options?.nx) {
       const result = await this.redis.setnx(key, value);
-      return result ? "OK" : null;
+      return result ? 'OK' : null;
     }
 
     // Handle "set if exists" or plain SET
@@ -136,7 +132,7 @@ export class UpstashConnection implements RedisConnection {
     }
 
     const result = await this.redis.set(key, value);
-    return result as "OK";
+    return result as 'OK';
   }
 
   /**
@@ -215,7 +211,7 @@ export class UpstashConnection implements RedisConnection {
    * @remarks
    * This is an atomic operation - either all keys are set or none are.
    */
-  async mset(data: Record<string, string>): Promise<"OK"> {
+  async mset(data: Record<string, string>): Promise<'OK'> {
     return this.redis.mset(data);
   }
 
@@ -322,11 +318,7 @@ export class UpstashConnection implements RedisConnection {
    * @remarks
    * Used for cleaning up expired cache entries.
    */
-  async zremrangebyscore(
-    key: string,
-    min: number,
-    max: number,
-  ): Promise<number> {
+  async zremrangebyscore(key: string, min: number, max: number): Promise<number> {
     return this.redis.zremrangebyscore(key, min, max);
   }
 
@@ -345,11 +337,7 @@ export class UpstashConnection implements RedisConnection {
    * @remarks
    * Lua scripts execute atomically on the Redis server.
    */
-  async eval(
-    script: string,
-    keys: string[],
-    args: (string | number)[],
-  ): Promise<unknown> {
+  async eval(script: string, keys: string[], args: (string | number)[]): Promise<unknown> {
     return this.redis.eval(script, keys, args);
   }
 
@@ -412,9 +400,9 @@ export class UpstashConnection implements RedisConnection {
    * @remarks
    * ⚠️ WARNING: This is a destructive operation that cannot be undone.
    */
-  async flushdb(): Promise<"OK"> {
+  async flushdb(): Promise<'OK'> {
     const result = await this.redis.flushdb();
-    return result as "OK";
+    return result as 'OK';
   }
 
   /**

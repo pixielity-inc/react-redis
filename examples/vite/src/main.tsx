@@ -28,7 +28,7 @@ async function bootstrap() {
       <ContainerProvider context={app}>
         <App />
       </ContainerProvider>
-    </BrowserRouter>,
+    </BrowserRouter>
   );
 }
 

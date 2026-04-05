@@ -94,7 +94,7 @@ export interface RedisConnection {
    * await connection.set('temp:data', value, { px: 5000 });
    * ```
    */
-  set(key: string, value: string, options?: SetOptions): Promise<"OK" | null>;
+  set(key: string, value: string, options?: SetOptions): Promise<'OK' | null>;
 
   /**
    * Delete one or more keys
@@ -200,7 +200,7 @@ export interface RedisConnection {
    * });
    * ```
    */
-  mset(data: Record<string, string>): Promise<"OK">;
+  mset(data: Record<string, string>): Promise<'OK'>;
 
   // ============================================================================
   // Increment/Decrement Operations
@@ -372,11 +372,7 @@ export interface RedisConnection {
    * const result = await connection.eval(script, ['counter'], ['1']);
    * ```
    */
-  eval(
-    script: string,
-    keys: string[],
-    args: (string | number)[],
-  ): Promise<unknown>;
+  eval(script: string, keys: string[], args: (string | number)[]): Promise<unknown>;
 
   // ============================================================================
   // Pipeline Operations
@@ -426,7 +422,7 @@ export interface RedisConnection {
    * }
    * ```
    */
-  flushdb(): Promise<"OK">;
+  flushdb(): Promise<'OK'>;
 
   /**
    * Disconnect from Redis

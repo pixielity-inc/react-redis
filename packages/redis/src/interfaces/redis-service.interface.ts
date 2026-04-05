@@ -16,33 +16,33 @@ import type { RedisConnection } from './redis-connection.interface';
  * The concrete implementation is `RedisManager`.
  */
 export interface IRedisService {
-  /** 
- * Get a Redis connection by name. 
- */
+  /**
+   * Get a Redis connection by name.
+   */
   connection(name?: string): Promise<RedisConnection>;
 
-  /** 
- * Disconnect a specific connection. 
- */
+  /**
+   * Disconnect a specific connection.
+   */
   disconnect(name?: string): Promise<void>;
 
-  /** 
- * Disconnect all active connections. 
- */
+  /**
+   * Disconnect all active connections.
+   */
   disconnectAll(): Promise<void>;
 
-  /** 
- * Get all configured connection names. 
- */
+  /**
+   * Get all configured connection names.
+   */
   getConnectionNames(): string[];
 
-  /** 
- * Get the default connection name. 
- */
+  /**
+   * Get the default connection name.
+   */
   getDefaultConnectionName(): string;
 
-  /** 
- * Check if a connection is currently active (cached). 
- */
+  /**
+   * Check if a connection is currently active (cached).
+   */
   isConnectionActive(name?: string): boolean;
 }

@@ -1,6 +1,6 @@
-import { beforeEach, afterEach, vi } from "vitest";
+import { beforeEach, afterEach, vi } from 'vitest';
 
-vi.mock("@abdokouta/ts-container", () => ({
+vi.mock('@abdokouta/ts-container', () => ({
   Injectable: () => (target: any) => target,
   Inject: () => (_target: any, _propertyKey: string, _parameterIndex: number) => {},
   Module: () => (target: any) => target,

@@ -1,21 +1,25 @@
 # React Redis Example
 
-This example demonstrates `@abdokouta/react-redis` — a browser-compatible Redis client using the Upstash HTTP API — integrated with `@abdokouta/ts-container`.
+This example demonstrates `@abdokouta/react-redis` — a browser-compatible Redis
+client using the Upstash HTTP API — integrated with `@abdokouta/ts-container`.
 
 ## Features Demonstrated
 
 ### Home (`/`)
+
 - `set()` with TTL
 - `get()`
 - `incr()`
 - `del()`
 
 ### Configuration (`/config`)
+
 - Active connection info
 - Setup guide with code snippets
 - Environment variable reference
 
 ### Advanced (`/advanced`)
+
 - `set / get / exists / ttl / del / flushdb`
 - `incr / decr` counters
 - `mset / mget` bulk operations
@@ -55,7 +59,8 @@ pnpm install
 pnpm dev
 ```
 
-Get your Upstash credentials at [console.upstash.com](https://console.upstash.com).
+Get your Upstash credentials at
+[console.upstash.com](https://console.upstash.com).
 
 ## Learn More
 

@@ -10,12 +10,14 @@ and this project adheres to
 
 ### Fixed
 
-- Replaced `forRoot` helper with inline `DynamicModule` object in `RedisModule.forRoot()` for compatibility with `@abdokouta/ts-container` v2
+- Replaced `forRoot` helper with inline `DynamicModule` object in
+  `RedisModule.forRoot()` for compatibility with `@abdokouta/ts-container` v2
 - Providers now correctly respect `isGlobal` flag per-provider
 
 ### Added
 
-- `isGlobal` option to `RedisConfig` — controls whether Redis providers are registered globally (defaults to `true`)
+- `isGlobal` option to `RedisConfig` — controls whether Redis providers are
+  registered globally (defaults to `true`)
 
 ## [1.0.0] - 2024-01-XX
 

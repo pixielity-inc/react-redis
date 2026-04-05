@@ -1,7 +1,7 @@
-import { Module } from "@abdokouta/ts-container";
-import { RedisModule } from "@abdokouta/react-redis";
+import { Module } from '@abdokouta/ts-container';
+import { RedisModule } from '@abdokouta/react-redis';
 
-import redisConfig from "@/config/redis.config";
+import redisConfig from '@/config/redis.config';
 
 @Module({
   imports: [RedisModule.forRoot(redisConfig)],

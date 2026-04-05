@@ -1,16 +1,16 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach } from 'vitest';
 
-describe("RedisModule", () => {
+describe('RedisModule', () => {
   beforeEach(() => {});
 
-  describe("configure", () => {
-    it("should configure the module", () => {
+  describe('configure', () => {
+    it('should configure the module', () => {
       expect(true).toBe(true);
     });
   });
 
-  describe("connection", () => {
-    it("should establish a connection", () => {
+  describe('connection', () => {
+    it('should establish a connection', () => {
       expect(true).toBe(true);
     });
   });

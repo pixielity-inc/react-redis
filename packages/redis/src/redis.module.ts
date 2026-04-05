@@ -7,16 +7,12 @@
  * @module redis.module
  */
 
-import { Module, type DynamicModule } from "@abdokouta/ts-container";
+import { Module, type DynamicModule } from '@abdokouta/ts-container';
 
-import {
-  REDIS_CONFIG,
-  REDIS_MANAGER,
-  REDIS_CONNECTOR,
-} from "@/constants/tokens.constant";
-import { RedisManager } from "@/services/redis-manager.service";
-import { UpstashConnector } from "@/connectors/upstash.connector";
-import type { RedisConfig } from "@/interfaces/redis-config.interface";
+import { REDIS_CONFIG, REDIS_MANAGER, REDIS_CONNECTOR } from '@/constants/tokens.constant';
+import { RedisManager } from '@/services/redis-manager.service';
+import { UpstashConnector } from '@/connectors/upstash.connector';
+import type { RedisConfig } from '@/interfaces/redis-config.interface';
 
 @Module({})
 export class RedisModule {

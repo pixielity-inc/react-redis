@@ -8,8 +8,8 @@
  * @packageDocumentation
  */
 
-import type { RedisConnection } from "./redis-connection.interface";
-import type { RedisConnectionConfig } from "./redis-config.interface";
+import type { RedisConnection } from './redis-connection.interface';
+import type { RedisConnectionConfig } from './redis-config.interface';
 
 /**
  * Connector creates Redis connections from configuration

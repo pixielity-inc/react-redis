@@ -17,8 +17,8 @@ export { RedisModule } from './redis.module';
 // ============================================================================
 export { RedisManager } from './services/redis-manager.service';
 
-/** 
- * @deprecated Use `RedisManager` instead. 
+/**
+ * @deprecated Use `RedisManager` instead.
  */
 export { RedisManager as RedisService } from './services/redis-manager.service';
 
@@ -41,10 +41,7 @@ export type {
   SetOptions,
 } from './interfaces/redis-connection.interface';
 
-export type {
-  RedisConfig,
-  RedisConnectionConfig,
-} from './interfaces/redis-config.interface';
+export type { RedisConfig, RedisConnectionConfig } from './interfaces/redis-config.interface';
 
 export type { RedisConnector } from './interfaces/redis-connector.interface';
 export type { IRedisService } from './interfaces/redis-service.interface';
