@@ -1,13 +1,19 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Button, Kbd, TextField, InputGroup } from "@heroui/react";
-import clsx from "clsx";
+import { useState } from 'react';
+import { Button, Kbd, Link, TextField, InputGroup } from '@heroui/react';
+import clsx from 'clsx';
 
-import { siteConfig } from "@/config/site";
-import { ThemeSwitch } from "@/components/theme-switch";
-import { GithubIcon, SearchIcon, Logo } from "@/components/icons";
+import { siteConfig } from '@/config/site';
+import { ThemeSwitch } from '@/components/theme-switch';
+import {
+  TwitterIcon,
+  GithubIcon,
+  DiscordIcon,
+  HeartFilledIcon,
+  SearchIcon,
+  Logo,
+} from '@/components/icons';
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,48 +39,75 @@ export const Navbar = () => {
     <nav className="sticky top-0 z-40 w-full border-b border-separator bg-background/70 backdrop-blur-lg">
       <header className="mx-auto flex h-16 max-w-[1280px] items-center justify-between gap-4 px-6">
         <div className="flex items-center gap-4">
-          <Link className="flex items-center gap-1" to="/">
+          <a className="flex items-center gap-1" href="/">
             <Logo />
-            <p className="font-bold text-inherit">Refine + DI</p>
-          </Link>
+            <p className="font-bold text-inherit">ACME</p>
+          </a>
           <ul className="hidden lg:flex gap-4 ml-2">
             {siteConfig.navItems.map((item) => (
               <li key={item.href}>
-                <Link
+                <a
                   className={clsx(
-                    "text-foreground hover:text-accent transition-colors",
+                    'text-foreground hover:text-accent transition-colors',
+                    'data-[active=true]:text-accent data-[active=true]:font-medium'
                   )}
-                  to={item.href}
+                  href={item.href}
                 >
                   {item.label}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
         </div>
 
         <div className="hidden sm:flex items-center gap-2">
-          <a
+          <Link
+            aria-label="Twitter"
+            href={siteConfig.links.twitter}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <TwitterIcon className="text-muted" />
+          </Link>
+          <Link
+            aria-label="Discord"
+            href={siteConfig.links.discord}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <DiscordIcon className="text-muted" />
+          </Link>
+          <Link
             aria-label="Github"
             href={siteConfig.links.github}
             rel="noopener noreferrer"
             target="_blank"
           >
             <GithubIcon className="text-muted" />
-          </a>
+          </Link>
           <ThemeSwitch />
           <div className="hidden lg:flex">{searchInput}</div>
+          <div className="hidden md:flex">
+            <Button
+              className="text-sm font-normal"
+              variant="tertiary"
+              onPress={() => window.open(siteConfig.links.sponsor, '_blank')}
+            >
+              <HeartFilledIcon className="text-danger" />
+              Sponsor
+            </Button>
+          </div>
         </div>
 
         <div className="flex sm:hidden items-center gap-2">
-          <a
+          <Link
             aria-label="Github"
             href={siteConfig.links.github}
             rel="noopener noreferrer"
             target="_blank"
           >
             <GithubIcon className="text-muted" />
-          </a>
+          </Link>
           <ThemeSwitch />
           <button
             aria-expanded={isMenuOpen}
@@ -82,12 +115,7 @@ export const Navbar = () => {
             className="p-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {isMenuOpen ? (
                 <path
                   d="M6 18L18 6M6 6l12 12"
@@ -112,11 +140,18 @@ export const Navbar = () => {
         <div className="border-t border-separator sm:hidden">
           <div className="p-4">{searchInput}</div>
           <ul className="flex flex-col gap-2 px-4 pb-4">
-            {siteConfig.navItems.map((item) => (
-              <li key={item.href}>
+            {siteConfig.navMenuItems.map((item, index) => (
+              <li key={`${item.label}-${index}`}>
                 <Link
-                  className="block py-2 text-lg text-foreground no-underline"
-                  to={item.href}
+                  className={clsx(
+                    'block py-2 text-lg no-underline',
+                    index === 2
+                      ? 'text-accent'
+                      : index === siteConfig.navMenuItems.length - 1
+                        ? 'text-danger'
+                        : 'text-foreground'
+                  )}
+                  href="#"
                 >
                   {item.label}
                 </Link>

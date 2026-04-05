@@ -1,335 +1,145 @@
-# Advanced DI Patterns Implementation
+# Redis Integration Patterns
 
-This document describes all the advanced patterns implemented in this example.
+This document describes the patterns demonstrated in this example.
 
-## 1. Dynamic Modules
+## 1. Module Setup
 
-### forRoot Pattern (ConfigModule)
+### RedisModule.forRoot
 
-**Purpose**: Configure a module at the root level with runtime options
-
-**Implementation**: `.examples/vite/src/modules/config.module.ts`
+Configure the Redis module at the root level with your Upstash connections:
 
 ```typescript
-ConfigModule.forRoot({
-  apiUrl: "https://api.example.com",
-  timeout: 5000,
-  retries: 3,
-  environment: "development",
+// modules/app.module.ts
+import { Module } from "@abdokouta/react-di";
+import { RedisModule } from "@abdokouta/react-redis";
+import redisConfig from "@/config/redis.config";
+
+@Module({
+  imports: [RedisModule.forRoot(redisConfig)],
+})
+export class AppModule {}
+```
+
+## 2. Configuration
+
+Use `defineConfig()` for type-safe connection configuration:
+
+```typescript
+// config/redis.config.ts
+import { defineConfig } from "@abdokouta/react-redis";
+
+export default defineConfig({
+  default: "main",
+  connections: {
+    main: {
+      url: import.meta.env.VITE_UPSTASH_REDIS_REST_URL,
+      token: import.meta.env.VITE_UPSTASH_REDIS_REST_TOKEN,
+    },
+    session: {
+      url: import.meta.env.VITE_UPSTASH_SESSION_REST_URL,
+      token: import.meta.env.VITE_UPSTASH_SESSION_REST_TOKEN,
+    },
+  },
 });
 ```
 
-**Key Features**:
+## 3. React Hooks
 
-- Accepts configuration object at module import time
-- Uses factory provider to inject config into service
-- Singleton scope ensures config is shared app-wide
+### useRedis
 
-### forFeature Pattern (CacheModule)
-
-**Purpose**: Feature-specific configuration that can be imported multiple times
-
-**Implementation**: `.examples/vite/src/modules/cache.module.ts`
+Access the `RedisService` via DI:
 
 ```typescript
-CacheModule.forFeature({
-  maxSize: 100,
-  ttl: 60000, // 1 minute
-});
-```
+import { useRedis } from "@abdokouta/react-redis";
 
-**Key Features**:
+function MyComponent() {
+  const redis = useRedis();
 
-- Can be imported multiple times with different configs
-- Each import creates a separate cache instance
-- Useful for feature modules with isolated state
-
-### Async Factory Pattern (ApiModule)
-
-**Purpose**: Create providers that require async initialization
-
-**Implementation**: `.examples/vite/src/modules/api.module.ts`
-
-```typescript
-{
-  provide: API_CONNECTION,
-  useAsyncFactory: () => async (): Promise<ApiConnection> => {
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    const connection = { /* ... */ };
-    return connection;
-  },
+  const handleSave = async () => {
+    const conn = await redis.connection();
+    await conn.set("key", "value", { ex: 3600 });
+  };
 }
 ```
 
-**Key Features**:
+### useRedisConnection
 
-- Async initialization before service is available
-- Perfect for database connections, API clients
-- Ensures resources are ready before injection
-
-## 2. Service Scopes
-
-### Singleton Scope (Default)
-
-**Services**: ConfigService, LoggerService, CounterService, UserService
-
-**Behavior**:
-
-- One instance shared across entire application
-- Created on first injection
-- Lives for the lifetime of the app
-
-**Use Cases**:
-
-- Configuration services
-- Logging services
-- Shared state management
-- Caching services
-
-### Transient Scope
-
-**Services**: RequestService, TransientService
-
-**Implementation**: `.examples/vite/src/modules/scope.module.ts`
+Directly get a named connection:
 
 ```typescript
-{
-  provide: TransientService,
-  useClass: TransientService,
-  scope: 'Transient',
+import { useRedisConnection } from "@abdokouta/react-redis";
+
+function SessionComponent() {
+  const connPromise = useRedisConnection("session");
+
+  const saveSession = async () => {
+    const conn = await connPromise;
+    await conn.set("session:id", data, { ex: 86400 });
+  };
 }
 ```
 
-**Behavior**:
+## 4. Redis Operations
 
-- New instance created every time it's injected
-- Each injection gets a unique instance
-- No shared state between instances
-
-**Use Cases**:
-
-- Request-scoped services (in web apps)
-- Stateless operations
-- Isolated processing units
-- Testing scenarios
-
-## 3. Lifecycle Hooks
-
-### onActivation Hook
-
-**Purpose**: Initialize resources after instance creation
-
-**Implementation**: `.examples/vite/src/modules/lifecycle.module.ts`
+### Basic key-value
 
 ```typescript
-{
-  provide: LifecycleService,
-  useClass: LifecycleService,
-  onActivation: async (context, instance) => {
-    await instance.onInit();
-    return instance;
-  },
-}
+const conn = await redis.connection();
+
+await conn.set("key", "value", { ex: 60 }); // set with TTL
+const val = await conn.get("key");           // get
+await conn.del("key");                       // delete
+const count = await conn.exists("key");      // exists check
+const ttl = await conn.ttl("key");           // remaining TTL
 ```
 
-**Use Cases**:
-
-- Establish database connections
-- Load configuration files
-- Set up event listeners
-- Validate instance state
-- Async initialization
-
-### onDeactivation Hook
-
-**Purpose**: Clean up resources before instance destruction
+### Counters
 
 ```typescript
-{
-  provide: LifecycleService,
-  useClass: LifecycleService,
-  onDeactivation: (instance) => {
-    instance.onDestroy();
-  },
-}
+await conn.incr("counter");   // increment by 1
+await conn.decr("counter");   // decrement by 1
+await conn.incrby("counter", 5); // increment by N
 ```
 
-**Use Cases**:
-
-- Close database connections
-- Clean up file handles
-- Remove event listeners
-- Cancel pending operations
-- Release resources
-
-## 4. Testing Patterns
-
-### Testable Service Design
-
-**Service**: TestableService
-
-**Implementation**: `.examples/vite/src/services/testable.service.ts`
-
-**Key Principles**:
-
-1. **Dependency Injection**: All dependencies injected via constructor
+### Bulk operations
 
 ```typescript
-constructor(
-  @Inject(LoggerService) private logger: LoggerService,
-  @Inject(CacheService) private cache: CacheService
-) {}
+await conn.mset({ "a": "Alpha", "b": "Bravo" });
+const [a, b] = await conn.mget("a", "b");
 ```
 
-2. **Pure Business Logic**: Separate business logic from dependencies
+### Pipeline (batch)
 
 ```typescript
-calculateDiscount(price: number, userLevel: string): number {
-  // Pure function - easy to test
-  const discounts = { bronze: 0.05, silver: 0.1, gold: 0.15 };
-  return price * (1 - discounts[userLevel]);
-}
+const pipeline = conn.pipeline();
+pipeline.set("x", "hello", { ex: 60 });
+pipeline.set("y", "world", { ex: 60 });
+pipeline.get("x");
+pipeline.get("y");
+const results = await pipeline.exec();
 ```
 
-3. **Mockable Dependencies**: Easy to mock injected services
+## 5. Multiple Connections
 
 ```typescript
-// In tests
-const mockLogger = { log: jest.fn(), error: jest.fn() };
-const mockCache = { get: jest.fn(), set: jest.fn() };
-const service = new TestableService(mockLogger, mockCache);
+const mainConn = await redis.connection();          // default
+const sessionConn = await redis.connection("session"); // named
+
+// Check active connections
+redis.getConnectionNames();        // ['main', 'session']
+redis.getDefaultConnectionName();  // 'main'
+redis.isConnectionActive("main");  // true/false
 ```
 
-### Testing Benefits
-
-**Isolation**: Test services without their dependencies
-
-```typescript
-// Mock all dependencies
-const service = new TestableService(mockLogger, mockCache);
-expect(service.calculateDiscount(100, "gold")).toBe(85);
-```
-
-**Verification**: Verify interactions with dependencies
-
-```typescript
-service.fetchUserData("123");
-expect(mockLogger.log).toHaveBeenCalledWith("Fetching user data for: 123");
-expect(mockCache.get).toHaveBeenCalledWith("user:123");
-```
-
-**Integration Testing**: Test with real dependencies
-
-```typescript
-const realLogger = new LoggerService();
-const realCache = new CacheService(config, realLogger);
-const service = new TestableService(realLogger, realCache);
-```
-
-## 5. Symbol Tokens
-
-**Purpose**: Type-safe injection tokens for non-class dependencies
-
-**Examples**:
-
-```typescript
-export const API_CONNECTION = Symbol.for("API_CONNECTION");
-export const CACHE_CONFIG = Symbol.for("CACHE_CONFIG");
-export const CONFIG_OPTIONS = Symbol.for("CONFIG_OPTIONS");
-```
-
-**Benefits**:
-
-- Type-safe injection
-- Avoid string-based tokens
-- Clear dependency contracts
-- Better IDE support
-
-## 6. Factory Providers
-
-### Sync Factory
-
-```typescript
-{
-  provide: ConfigService,
-  useFactory: (context) => () => {
-    const options = context.container.get<AppConfig>(CONFIG_OPTIONS);
-    return new ConfigService(options);
-  },
-}
-```
-
-### Async Factory
-
-```typescript
-{
-  provide: API_CONNECTION,
-  useAsyncFactory: () => async () => {
-    const connection = await createConnection();
-    return connection;
-  },
-}
-```
-
-## Module Organization
-
-```
-modules/
-├── app.module.ts          # Root module - imports all feature modules
-├── config.module.ts       # Dynamic module with forRoot
-├── api.module.ts          # Async factory module
-├── cache.module.ts        # Feature module with forFeature
-├── testing.module.ts      # Testing patterns module
-├── lifecycle.module.ts    # Lifecycle hooks module
-└── scope.module.ts        # Scope management module
-```
-
-## Best Practices
-
-### 1. Module Design
-
-- ✅ Use forRoot for root-level configuration
-- ✅ Use forFeature for feature-specific configuration
-- ✅ Export only what's needed
-- ✅ Keep modules focused and cohesive
-
-### 2. Service Design
-
-- ✅ Inject dependencies via constructor
-- ✅ Use appropriate scope (Singleton by default)
-- ✅ Implement lifecycle hooks when needed
-- ✅ Keep services testable
-
-### 3. Lifecycle Management
-
-- ✅ Use onActivation for initialization
-- ✅ Use onDeactivation for cleanup
-- ✅ Always return instance from onActivation
-- ✅ Handle async operations properly
-
-### 4. Testing
-
-- ✅ Design services for testability
-- ✅ Use dependency injection
-- ✅ Separate business logic from dependencies
-- ✅ Mock dependencies in tests
-
-## Running the Examples
+## Running the Example
 
 ```bash
-# Install dependencies
+cp .env.example .env   # fill in Upstash credentials
 pnpm install
-
-# Start dev server
 pnpm dev
-
-# Navigate to:
-# - http://localhost:5173/container - Basic DI demo
-# - http://localhost:5173/advanced - Advanced patterns demo
 ```
 
-## Learn More
-
-- [Main README](../../README.md)
-- [Lifecycle Hooks Documentation](../../.docs/LIFECYCLE_HOOKS.md)
-- [Inversiland Documentation](https://github.com/carlossalasamper/inversiland)
+Navigate to:
+- `http://localhost:5173/` — Basic Redis demo
+- `http://localhost:5173/config` — Configuration guide
+- `http://localhost:5173/advanced` — Advanced operations
