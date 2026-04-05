@@ -104,18 +104,6 @@
         "read_core_files"
       ]
     },
-    "refine": {
-      "command": "npx",
-      "args": ["-y", "@abdokouta/refine-mcp@latest"],
-      "disabled": true,
-      "autoApprove": [
-        "explore_structure",
-        "read_file",
-        "search_files",
-        "get_packages",
-        "read_core_files"
-      ]
-    },
     "puppeteer": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-puppeteer@latest"],
