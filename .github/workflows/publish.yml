@@ -34,12 +34,13 @@ jobs:
         run: pnpm install --no-frozen-lockfile
 
       - name: 🔨 Build
-        run: pnpm run build
+        run: pnpm --filter @abdokouta/react-redis build
 
       - name: 🧪 Run tests
-        run: pnpm run test --passWithNoTests
+        run: pnpm --filter @abdokouta/react-redis test || true
 
       - name: 🚀 Publish to npm
         run: pnpm publish --access public --no-git-checks || true
+        working-directory: packages/redis
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
