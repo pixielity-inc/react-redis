@@ -1,11 +1,10 @@
-import { Module } from '@abdokouta/react-di';
-import { RedisModule } from '@abdokouta/react-redis';
-import redisConfig from '@/config/redis.config';
+import { Module } from "@abdokouta/react-di";
+import { RedisModule } from "@abdokouta/react-redis";
+
+import redisConfig from "@/config/redis.config";
 
 @Module({
-  imports: [
-    RedisModule.forRoot(redisConfig),
-  ],
+  imports: [RedisModule.forRoot(redisConfig)],
   providers: [],
   exports: [],
 })
