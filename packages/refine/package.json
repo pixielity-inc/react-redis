@@ -62,6 +62,7 @@
     "tslib": "^2.8.1"
   },
   "devDependencies": {
+    "@tanstack/react-query": "^5.0.0",
     "@types/node": "^22.15.21",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
@@ -77,6 +78,7 @@
   "peerDependencies": {
     "@abdokouta/react-di": "^2.0.0",
     "@refinedev/core": "^5.0.0",
+    "@tanstack/react-query": "^5.0.0",
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0"
   },
@@ -85,6 +87,9 @@
       "optional": false
     },
     "@refinedev/core": {
+      "optional": false
+    },
+    "@tanstack/react-query": {
       "optional": false
     }
   },
