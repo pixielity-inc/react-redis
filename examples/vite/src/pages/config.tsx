@@ -98,7 +98,7 @@ export default defineConfig({
             <Card className="p-6">
               <pre className="text-sm font-mono overflow-x-auto whitespace-pre">
                 {`// modules/app.module.ts
-import { Module } from "@abdokouta/react-di";
+import { Module } from "@abdokouta/ts-container";
 import { RedisModule } from "@abdokouta/react-redis";
 import redisConfig from "@/config/redis.config";
 

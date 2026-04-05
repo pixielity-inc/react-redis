@@ -114,7 +114,7 @@ export default function IndexPage() {
             <pre className="text-sm font-medium font-mono">
               pnpm add{" "}
               <code className="px-2 py-1 h-fit font-mono font-normal inline whitespace-nowrap rounded-sm bg-accent/20 text-accent text-sm">
-                @abdokouta/react-redis @abdokouta/react-di
+                @abdokouta/react-redis @abdokouta/ts-container
               </code>
             </pre>
           </div>

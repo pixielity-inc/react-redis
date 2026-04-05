@@ -10,7 +10,7 @@ Configure the Redis module at the root level with your Upstash connections:
 
 ```typescript
 // modules/app.module.ts
-import { Module } from "@abdokouta/react-di";
+import { Module } from "@abdokouta/ts-container";
 import { RedisModule } from "@abdokouta/react-redis";
 import redisConfig from "@/config/redis.config";
 

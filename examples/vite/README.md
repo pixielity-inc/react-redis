@@ -1,6 +1,6 @@
 # React Redis Example
 
-This example demonstrates `@abdokouta/react-redis` — a browser-compatible Redis client using the Upstash HTTP API — integrated with `@abdokouta/react-di`.
+This example demonstrates `@abdokouta/react-redis` — a browser-compatible Redis client using the Upstash HTTP API — integrated with `@abdokouta/ts-container`.
 
 ## Features Demonstrated
 

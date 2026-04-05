@@ -1,2 +1,3 @@
 // Auto-generated exports for hooks
-export * from "./use-redis";
+export { useRedis } from './use-redis';
+export { useRedisConnection } from './use-redis-connection';

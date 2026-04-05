@@ -9,7 +9,7 @@ export default defineConfig({
   minify: false,
   target: "es2020",
   platform: "neutral",
-  external: ["@abdokouta/react-di", "react", "@upstash/redis"],
+  external: ['@abdokouta/ts-container', '@abdokouta/ts-container-react', '@abdokouta/react-support', 'react', '@upstash/redis'],
   splitting: false,
   skipNodeModulesBundle: true,
   outExtension({ format }) {

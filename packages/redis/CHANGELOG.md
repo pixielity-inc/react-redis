@@ -10,7 +10,7 @@ and this project adheres to
 
 ### Fixed
 
-- Replaced `forRoot` helper with inline `DynamicModule` object in `RedisModule.forRoot()` for compatibility with `@abdokouta/react-di` v2
+- Replaced `forRoot` helper with inline `DynamicModule` object in `RedisModule.forRoot()` for compatibility with `@abdokouta/ts-container` v2
 - Providers now correctly respect `isGlobal` flag per-provider
 
 ### Added

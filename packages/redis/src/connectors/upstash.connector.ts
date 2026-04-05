@@ -10,13 +10,14 @@
  */
 
 import { Redis } from "@upstash/redis";
-import { Injectable } from "@abdokouta/react-di";
-import { UpstashConnection } from "@/connections/upstash.connection";
+import { Injectable } from "@abdokouta/ts-container";
+
 import type {
   RedisConnector,
   RedisConnection,
   RedisConnectionConfig,
 } from "@/interfaces";
+import { UpstashConnection } from "@/connections/upstash.connection";
 
 /**
  * Upstash Redis connector implementation
@@ -27,7 +28,7 @@ import type {
  * configuration.
  *
  * The connector is injectable and can be used with dependency injection
- * frameworks like @abdokouta/react-di.
+ * frameworks like @abdokouta/ts-container.
  *
  * @example
  * ```typescript
@@ -87,9 +88,6 @@ export class UpstashConnector implements RedisConnector {
       // Timeout is handled per-request if needed
     });
 
-    // Wrap in our connection interface
-    // Use 'default' as the name since this is a single connection
-    // The actual name will be set by RedisManager
-    return new UpstashConnection(client, "default");
+    return new UpstashConnection(client, 'upstash');
   }
 }

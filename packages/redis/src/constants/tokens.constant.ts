@@ -1,47 +1,25 @@
 /**
  * Dependency injection tokens for Redis module
  *
- * @remarks
- * These symbols are used as unique identifiers for dependency injection.
- * Using symbols prevents naming collisions and provides type-safe DI tokens.
- *
  * @packageDocumentation
  */
 
-/**
- * Injection token for Redis configuration
- *
- * @remarks
- * Use this token to inject the Redis configuration object into services.
- * The configuration defines connection settings for all Redis instances.
- *
- * @example
- * ```typescript
- * @Injectable()
- * export class MyService {
- *   constructor(
- *     @Inject(REDIS_CONFIG) private config: RedisConfig
- *   ) {}
- * }
- * ```
+/** 
+ * Injection token for Redis configuration. 
  */
-export const REDIS_CONFIG = Symbol.for("REDIS_CONFIG");
+export const REDIS_CONFIG = Symbol.for('REDIS_CONFIG');
+
+/** 
+ * Injection token for Redis connector. 
+ */
+export const REDIS_CONNECTOR = Symbol.for('REDIS_CONNECTOR');
+
+/** 
+ * Injection token for RedisManager (alternative to class-based injection). 
+ */
+export const REDIS_MANAGER = Symbol.for('REDIS_MANAGER');
 
 /**
- * Injection token for Redis connector
- *
- * @remarks
- * Use this token to inject the Redis connector that creates connections.
- * The connector is responsible for initializing Redis clients from configuration.
- *
- * @example
- * ```typescript
- * @Injectable()
- * export class MyService {
- *   constructor(
- *     @Inject(REDIS_CONNECTOR) private connector: RedisConnector
- *   ) {}
- * }
- * ```
+ * @deprecated Use REDIS_MANAGER instead.
  */
-export const REDIS_CONNECTOR = Symbol.for("REDIS_CONNECTOR");
+export const REDIS_SERVICE = REDIS_MANAGER;
